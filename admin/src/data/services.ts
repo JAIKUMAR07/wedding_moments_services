@@ -29,7 +29,12 @@ export const initialServices: Service[] = [
       { id: "prewed-photo", name: "Photo Shoot Service", pricePerDay: 1500 },
       { id: "prewed-video", name: "Videography Service", pricePerDay: 2000 },
       { id: "prewed-drone", name: "Drone Shoot Service", pricePerDay: 2500 },
-      { id: "prewed-album", name: "Premium Album Design", pricePerDay: 3000 },
+      {
+        id: "prewed-album",
+        name: "Premium Album Design",
+        pricePerDay: 3000,
+        pricingType: "per-piece",
+      },
     ],
     isActive: true,
     createdAt: new Date().toISOString(),
@@ -80,7 +85,12 @@ export const initialServices: Service[] = [
       "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1000",
     subServices: [
       { id: "film-cinema", name: "Cinematography Service", pricePerDay: 3000 },
-      { id: "film-editing", name: "Professional Editing", pricePerDay: 2000 },
+      {
+        id: "film-editing",
+        name: "Professional Editing",
+        pricePerDay: 2000,
+        pricingType: "per-hour",
+      },
       { id: "film-drone", name: "Drone Cinematography", pricePerDay: 2500 },
       {
         id: "film-equipment",

@@ -165,12 +165,6 @@ All data is automatically saved to browser LocalStorage:
 - ✅ Persistent across sessions
 - ✅ Easy migration to backend
 
-### **Export/Import**
-
-- **Export**: Download all services as JSON file
-- **Import**: Upload JSON file to restore data
-- **Reset**: Restore to initial default services
-
 ---
 
 ## 🔧 State Management

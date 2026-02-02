@@ -1,9 +1,12 @@
 // Admin-specific types extending client types
 
+export type PricingType = "per-day" | "per-piece" | "per-hour" | "per-event";
+
 export interface SubService {
   id: string;
   name: string;
-  pricePerDay: number;
+  pricePerDay: number; // Keeping name for backward compatibility
+  pricingType?: PricingType; // New: pricing model
   days?: number;
 }
 

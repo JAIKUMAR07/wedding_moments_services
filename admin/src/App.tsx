@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AdminProvider } from "./context/AdminContext";
+import { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
@@ -7,23 +7,34 @@ import Services from "./pages/Services";
 import Pricing from "./pages/Pricing";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
+import { AdminProvider } from "./context/AdminContext";
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const handleMenuClick = () => {
+    setIsSidebarOpen(true);
+  };
+
+  const handleSidebarClose = () => {
+    setIsSidebarOpen(false);
+  };
+
   return (
     <AdminProvider>
       <Router>
         <div className="flex min-h-screen bg-black">
           {/* Sidebar */}
-          <Sidebar />
+          <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarClose} />
 
           {/* Main Content */}
-          <div className="flex-1 ml-64">
+          <div className="flex-1 flex flex-col w-full lg:ml-64">
             <Routes>
               <Route
                 path="/"
                 element={
                   <>
-                    <Header title="Dashboard" />
+                    <Header title="Dashboard" onMenuClick={handleMenuClick} />
                     <Dashboard />
                   </>
                 }
@@ -32,7 +43,10 @@ function App() {
                 path="/services"
                 element={
                   <>
-                    <Header title="Services Management" />
+                    <Header
+                      title="Services Management"
+                      onMenuClick={handleMenuClick}
+                    />
                     <Services />
                   </>
                 }
@@ -41,7 +55,10 @@ function App() {
                 path="/pricing"
                 element={
                   <>
-                    <Header title="Pricing Management" />
+                    <Header
+                      title="Pricing Management"
+                      onMenuClick={handleMenuClick}
+                    />
                     <Pricing />
                   </>
                 }
@@ -50,7 +67,10 @@ function App() {
                 path="/analytics"
                 element={
                   <>
-                    <Header title="Analytics & Insights" />
+                    <Header
+                      title="Analytics & Insights"
+                      onMenuClick={handleMenuClick}
+                    />
                     <Analytics />
                   </>
                 }
@@ -59,7 +79,7 @@ function App() {
                 path="/settings"
                 element={
                   <>
-                    <Header title="Settings" />
+                    <Header title="Settings" onMenuClick={handleMenuClick} />
                     <Settings />
                   </>
                 }

@@ -1,48 +1,18 @@
 import { useState } from "react";
 import { useAdmin } from "../context/AdminContext";
-import { DollarSign, Save, RotateCcw } from "lucide-react";
+import { Edit2, DollarSign } from "lucide-react";
+import ServiceModal from "../components/ServiceModal";
 import type { Service, SubService } from "../types";
+import { getPricingUnit } from "../utils/pricing";
 
 const Pricing = () => {
-  const { services, updateService } = useAdmin();
-  const [hasChanges, setHasChanges] = useState(false);
-  const [editedServices, setEditedServices] = useState<Service[]>([
-    ...services,
-  ]);
+  const { services } = useAdmin();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingService, setEditingService] = useState<Service | null>(null);
 
-  const handlePriceChange = (
-    serviceId: string,
-    subServiceId: string,
-    newPrice: number,
-  ) => {
-    setHasChanges(true);
-    setEditedServices((prev) =>
-      prev.map((service) =>
-        service.id === serviceId
-          ? {
-              ...service,
-              subServices: service.subServices.map((sub) =>
-                sub.id === subServiceId
-                  ? { ...sub, pricePerDay: newPrice }
-                  : sub,
-              ),
-            }
-          : service,
-      ),
-    );
-  };
-
-  const handleSaveAll = () => {
-    editedServices.forEach((service) => {
-      updateService(service.id, { subServices: service.subServices });
-    });
-    setHasChanges(false);
-    alert("All prices updated successfully!");
-  };
-
-  const handleReset = () => {
-    setEditedServices([...services]);
-    setHasChanges(false);
+  const handleEdit = (service: Service) => {
+    setEditingService(service);
+    setIsModalOpen(true);
   };
 
   const calculateServiceTotal = (subServices: SubService[]) => {
@@ -50,10 +20,20 @@ const Pricing = () => {
   };
 
   const calculateGrandTotal = () => {
-    return editedServices.reduce(
+    return services.reduce(
       (total, service) => total + calculateServiceTotal(service.subServices),
       0,
     );
+  };
+
+  const calculateAveragePrice = () => {
+    const totalSubServices = services.reduce(
+      (sum, s) => sum + s.subServices.length,
+      0,
+    );
+    return totalSubServices > 0
+      ? Math.round(calculateGrandTotal() / totalSubServices)
+      : 0;
   };
 
   return (
@@ -63,54 +43,27 @@ const Pricing = () => {
         <div>
           <h2 className="text-2xl font-bold text-white">Pricing Management</h2>
           <p className="text-sm text-gray-400 mt-1">
-            Update service prices centrally
+            View and manage service pricing
           </p>
         </div>
-        {hasChanges && (
-          <div className="flex gap-3">
-            <button
-              onClick={handleReset}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors"
-            >
-              <RotateCcw className="w-4 h-4" />
-              Reset
-            </button>
-            <button
-              onClick={handleSaveAll}
-              className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
-            >
-              <Save className="w-4 h-4" />
-              Save All Changes
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Price Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-5">
           <p className="text-sm text-gray-400 mb-1">Total Services</p>
-          <p className="text-3xl font-bold text-white">
-            {editedServices.length}
-          </p>
+          <p className="text-3xl font-bold text-white">{services.length}</p>
         </div>
         <div className="bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-xl p-5">
           <p className="text-sm text-gray-400 mb-1">Total Sub-Services</p>
           <p className="text-3xl font-bold text-white">
-            {editedServices.reduce((sum, s) => sum + s.subServices.length, 0)}
+            {services.reduce((sum, s) => sum + s.subServices.length, 0)}
           </p>
         </div>
         <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-xl p-5">
           <p className="text-sm text-gray-400 mb-1">Average Price</p>
           <p className="text-3xl font-bold text-white">
-            ₹
-            {Math.round(
-              calculateGrandTotal() /
-                editedServices.reduce(
-                  (sum, s) => sum + s.subServices.length,
-                  0,
-                ),
-            )}
+            ₹{calculateAveragePrice()}
           </p>
         </div>
         <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-5">
@@ -123,10 +76,10 @@ const Pricing = () => {
 
       {/* Pricing Tables */}
       <div className="space-y-6">
-        {editedServices.map((service) => (
+        {services.map((service) => (
           <div
             key={service.id}
-            className="bg-gray-800/50 border border-gray-700 rounded-xl overflow-hidden"
+            className="bg-gray-800/50 border border-gray-700 rounded-xl overflow-hidden hover:border-amber-500/30 transition-all duration-300"
           >
             {/* Service Header */}
             <div className="flex items-center justify-between px-6 py-4 bg-gray-800/80 border-b border-gray-700">
@@ -145,11 +98,21 @@ const Pricing = () => {
                   </p>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="text-xs text-gray-400 mb-1">Service Total</p>
-                <p className="text-2xl font-bold text-amber-400">
-                  ₹{calculateServiceTotal(service.subServices)}
-                </p>
+              <div className="flex items-center gap-4">
+                <div className="text-right">
+                  <p className="text-xs text-gray-400 mb-1">Service Total</p>
+                  <p className="text-2xl font-bold text-amber-400">
+                    ₹{calculateServiceTotal(service.subServices)}
+                  </p>
+                </div>
+                <button
+                  onClick={() => handleEdit(service)}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 border border-blue-500/20 hover:border-blue-500/40 rounded-lg transition-all duration-300"
+                  title="Edit Service"
+                >
+                  <Edit2 className="w-4 h-4" />
+                  <span className="hidden sm:inline">Edit</span>
+                </button>
               </div>
             </div>
 
@@ -188,20 +151,12 @@ const Pricing = () => {
                       <td className="py-4 px-6">
                         <div className="flex items-center justify-end gap-2">
                           <DollarSign className="w-4 h-4 text-gray-400" />
-                          <input
-                            type="number"
-                            value={sub.pricePerDay}
-                            onChange={(e) =>
-                              handlePriceChange(
-                                service.id,
-                                sub.id,
-                                parseInt(e.target.value) || 0,
-                              )
-                            }
-                            className="w-32 px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-right focus:outline-none focus:ring-2 focus:ring-amber-500"
-                            min="0"
-                            step="100"
-                          />
+                          <span className="text-lg font-semibold text-white">
+                            {sub.pricePerDay}
+                          </span>
+                          <span className="text-sm text-gray-400">
+                            {getPricingUnit(sub.pricingType)}
+                          </span>
                         </div>
                       </td>
                     </tr>
@@ -213,22 +168,15 @@ const Pricing = () => {
         ))}
       </div>
 
-      {/* Bottom Save Button */}
-      {hasChanges && (
-        <div className="fixed bottom-8 right-8 z-30">
-          <button
-            onClick={handleSaveAll}
-            className="flex items-center gap-3 px-6 py-4 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-full shadow-lg shadow-amber-500/30 hover:shadow-xl hover:shadow-amber-500/40 transition-all duration-300 animate-scaleIn"
-          >
-            <Save className="w-5 h-5" />
-            <span>Save All Changes</span>
-            <span className="px-2 py-1 bg-white/20 rounded-full text-xs">
-              {editedServices.reduce((sum, s) => sum + s.subServices.length, 0)}{" "}
-              prices
-            </span>
-          </button>
-        </div>
-      )}
+      {/* Service Modal */}
+      <ServiceModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingService(null);
+        }}
+        service={editingService}
+      />
     </div>
   );
 };

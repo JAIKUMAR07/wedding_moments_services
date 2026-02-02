@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { X, Plus, Trash2 } from "lucide-react";
 import { useAdmin } from "../context/AdminContext";
 import type { Service, SubService } from "../types";
+import { PRICING_TYPES } from "../utils/pricing";
 
 interface ServiceModalProps {
   isOpen: boolean;
@@ -89,6 +90,7 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
         id: `sub-${Date.now()}`,
         name: "",
         pricePerDay: 0,
+        pricingType: "per-day", // Default pricing type
       },
     ]);
   };
@@ -110,16 +112,18 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="bg-gray-900 border border-gray-700 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col animate-scaleIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
+      <div className="bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col animate-scaleIn my-8">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-700">
-          <h2 className="text-2xl font-bold text-white">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-700">
+          <h2 className="text-xl sm:text-2xl font-bold text-white">
             {isEditing ? "Edit Service" : "Add New Service"}
           </h2>
           <button
             onClick={onClose}
             className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+            title="Close"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
@@ -244,6 +248,22 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
                       required
                     />
                   </div>
+                  <div className="w-40">
+                    <select
+                      value={sub.pricingType || "per-day"}
+                      onChange={(e) =>
+                        updateSubService(index, "pricingType", e.target.value)
+                      }
+                      className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      aria-label="Pricing type"
+                    >
+                      {PRICING_TYPES.map((type) => (
+                        <option key={type.value} value={type.value}>
+                          {type.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <div className="w-32">
                     <input
                       type="number"
@@ -265,6 +285,8 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
                     type="button"
                     onClick={() => removeSubService(index)}
                     className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                    title="Remove sub-service"
+                    aria-label="Remove sub-service"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
