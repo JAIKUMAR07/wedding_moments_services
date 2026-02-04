@@ -18,6 +18,16 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
 
+        {/* Offer Badge */}
+        {service.offer && (
+          <div className="absolute top-4 right-4 z-10">
+            <div className="relative overflow-hidden bg-gradient-to-r from-red-600 to-rose-600 text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg shadow-red-500/20 animate-pulse">
+              <span className="relative z-10">{service.offer}</span>
+              <div className="absolute inset-0 bg-white/20 -translate-x-full animate-shimmer"></div>
+            </div>
+          </div>
+        )}
+
         {/* Service Name on Image */}
         <div className="absolute bottom-4 left-4 right-4">
           <h3 className="text-2xl font-serif font-bold text-white mb-1">

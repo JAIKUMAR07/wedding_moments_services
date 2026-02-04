@@ -167,12 +167,28 @@ const ServiceDetails = () => {
                     <h3 className="text-xl font-semibold text-white mb-2">
                       {subService.name}
                     </h3>
-                    <p className="text-amber-400 text-lg font-medium">
-                      ₹{subService.pricePerDay} INR per day
-                    </p>
+                    <div className="flex flex-col">
+                      {subService.originalPrice && (
+                        <span className="text-gray-500 line-through text-sm">
+                          ₹{subService.originalPrice}
+                        </span>
+                      )}
+                      <p className="text-amber-400 text-lg font-medium">
+                        ₹{subService.pricePerDay} INR{" "}
+                        {subService.pricingType === "manual"
+                          ? subService.customUnit || ""
+                          : subService.pricingType === "per-piece"
+                            ? "per piece"
+                            : subService.pricingType === "per-hour"
+                              ? "per hour"
+                              : subService.pricingType === "per-event"
+                                ? "per event"
+                                : "per day"}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Day Selector */}
+                  {/* Quantity Selector */}
                   <div className="flex items-center gap-6">
                     <div className="flex items-center gap-4">
                       <button
@@ -186,7 +202,17 @@ const ServiceDetails = () => {
                         <div className="text-2xl font-bold text-white">
                           {days}
                         </div>
-                        <div className="text-xs text-gray-400">days</div>
+                        <div className="text-xs text-gray-400">
+                          {subService.pricingType === "manual"
+                            ? "units" // Generic for manual
+                            : subService.pricingType === "per-piece"
+                              ? "pcs"
+                              : subService.pricingType === "per-hour"
+                                ? "hrs"
+                                : subService.pricingType === "per-event"
+                                  ? "events"
+                                  : "days"}
+                        </div>
                       </div>
                       <button
                         onClick={() => handleDaysChange(subService.id, 1)}

@@ -2,10 +2,13 @@ import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   Package,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   Settings,
   X,
+  Megaphone,
+  User,
+  Users,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -26,14 +29,29 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       label: "Services",
     },
     {
+      path: "/offers",
+      icon: Megaphone,
+      label: "Offers & Ticker",
+    },
+    {
       path: "/pricing",
-      icon: DollarSign,
+      icon: IndianRupee,
       label: "Pricing",
     },
     {
       path: "/analytics",
       icon: TrendingUp,
       label: "Analytics",
+    },
+    {
+      path: "/users",
+      icon: Users,
+      label: "Users",
+    },
+    {
+      path: "/profile",
+      icon: User,
+      label: "Profile",
     },
     {
       path: "/settings",

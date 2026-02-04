@@ -11,6 +11,8 @@ export const getPricingLabel = (pricingType?: PricingType): string => {
       return "Per Hour";
     case "per-event":
       return "Per Event";
+    case "manual":
+      return "Manual / Fixed";
     default:
       return "Per Day"; // Default fallback
   }
@@ -27,6 +29,8 @@ export const getPricingUnit = (pricingType?: PricingType): string => {
       return "/hour";
     case "per-event":
       return "/event";
+    case "manual":
+      return "";
     default:
       return "/day";
   }
@@ -38,4 +42,5 @@ export const PRICING_TYPES: { value: PricingType; label: string }[] = [
   { value: "per-piece", label: "Per Piece" },
   { value: "per-hour", label: "Per Hour" },
   { value: "per-event", label: "Per Event" },
+  { value: "manual", label: "Manual / Fixed" },
 ];

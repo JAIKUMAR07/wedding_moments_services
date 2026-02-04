@@ -1,12 +1,19 @@
 // Admin-specific types extending client types
 
-export type PricingType = "per-day" | "per-piece" | "per-hour" | "per-event";
+export type PricingType =
+  | "per-day"
+  | "per-piece"
+  | "per-hour"
+  | "per-event"
+  | "manual";
 
 export interface SubService {
   id: string;
   name: string;
   pricePerDay: number; // Keeping name for backward compatibility
+  originalPrice?: number; // New: discount logic
   pricingType?: PricingType; // New: pricing model
+  customUnit?: string; // New: for manual pricing unit
   days?: number;
 }
 
@@ -15,6 +22,7 @@ export interface Service {
   name: string;
   description: string;
   image: string;
+  offer?: string; // New: Service offer badge text
   subServices: SubService[];
   isActive?: boolean; // Admin feature: enable/disable service
   createdAt?: string;

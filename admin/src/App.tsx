@@ -4,9 +4,12 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
 import Services from "./pages/Services";
+import Offers from "./pages/Offers";
 import Pricing from "./pages/Pricing";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
+import UserManagement from "./pages/UserManagement";
 import { AdminProvider } from "./context/AdminContext";
 
 function App() {
@@ -52,6 +55,18 @@ function App() {
                 }
               />
               <Route
+                path="/offers"
+                element={
+                  <>
+                    <Header
+                      title="Offers & Ticker"
+                      onMenuClick={handleMenuClick}
+                    />
+                    <Offers />
+                  </>
+                }
+              />
+              <Route
                 path="/pricing"
                 element={
                   <>
@@ -72,6 +87,27 @@ function App() {
                       onMenuClick={handleMenuClick}
                     />
                     <Analytics />
+                  </>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <>
+                    <Header title="My Profile" onMenuClick={handleMenuClick} />
+                    <Profile />
+                  </>
+                }
+              />
+              <Route
+                path="/users"
+                element={
+                  <>
+                    <Header
+                      title="User Management"
+                      onMenuClick={handleMenuClick}
+                    />
+                    <UserManagement />
                   </>
                 }
               />

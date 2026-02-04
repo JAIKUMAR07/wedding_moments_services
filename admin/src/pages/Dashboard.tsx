@@ -1,10 +1,11 @@
 import {
   Package,
   TrendingUp,
-  DollarSign,
+  IndianRupee,
   Activity,
   CheckCircle,
   XCircle,
+  DollarSign,
 } from "lucide-react";
 import { useAdmin } from "../context/AdminContext";
 import StatsCard from "../components/StatsCard";
@@ -18,6 +19,14 @@ const Dashboard = () => {
 
   return (
     <div className="p-8 space-y-8 animate-fadeIn">
+      {/* Header */}
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-white">Dashboard Overview</h2>
+        <p className="text-sm text-gray-400 mt-1">
+          Welcome back to your admin control center
+        </p>
+      </div>
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard
@@ -38,7 +47,7 @@ const Dashboard = () => {
         <StatsCard
           title="Average Price"
           value={`₹${stats.averagePricePerDay}`}
-          icon={DollarSign}
+          icon={IndianRupee}
           trend={{ value: 8, isPositive: true }}
           iconColor="text-amber-400"
           iconBgColor="bg-amber-500/10"

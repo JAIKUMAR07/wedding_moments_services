@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAdmin } from "../context/AdminContext";
-import { Edit2, DollarSign } from "lucide-react";
+import { Edit2, IndianRupee, Search, Layers, Tag, Wallet } from "lucide-react";
 import ServiceModal from "../components/ServiceModal";
 import type { Service, SubService } from "../types";
 import { getPricingUnit } from "../utils/pricing";
@@ -9,6 +9,7 @@ const Pricing = () => {
   const { services } = useAdmin();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleEdit = (service: Service) => {
     setEditingService(service);
@@ -36,47 +37,88 @@ const Pricing = () => {
       : 0;
   };
 
+  const filteredServices = services.filter((service) => {
+    const term = searchTerm.toLowerCase();
+    const serviceNameMatch = service.name.toLowerCase().includes(term);
+    const subServiceMatch = service.subServices.some((sub) =>
+      sub.name.toLowerCase().includes(term),
+    );
+    return serviceNameMatch || subServiceMatch;
+  });
+
   return (
     <div className="p-8 space-y-6 animate-fadeIn">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="text-center space-y-4">
         <div>
           <h2 className="text-2xl font-bold text-white">Pricing Management</h2>
           <p className="text-sm text-gray-400 mt-1">
             View and manage service pricing
           </p>
         </div>
-      </div>
 
-      {/* Price Summary */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-5">
-          <p className="text-sm text-gray-400 mb-1">Total Services</p>
-          <p className="text-3xl font-bold text-white">{services.length}</p>
+        {/* Price Summary */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-5">
+            <div className="flex items-start justify-between mb-2">
+              <p className="text-sm text-gray-400">Total Services</p>
+              <div className="p-2 bg-blue-500/20 rounded-lg">
+                <Tag className="w-4 h-4 text-blue-400" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-white">{services.length}</p>
+          </div>
+          <div className="bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-xl p-5">
+            <div className="flex items-start justify-between mb-2">
+              <p className="text-sm text-gray-400">Total Sub-Services</p>
+              <div className="p-2 bg-green-500/20 rounded-lg">
+                <Layers className="w-4 h-4 text-green-400" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-white">
+              {services.reduce((sum, s) => sum + s.subServices.length, 0)}
+            </p>
+          </div>
+          <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-xl p-5">
+            <div className="flex items-start justify-between mb-2">
+              <p className="text-sm text-gray-400">Average Price</p>
+              <div className="p-2 bg-purple-500/20 rounded-lg">
+                <IndianRupee className="w-4 h-4 text-purple-400" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-white">
+              ₹{calculateAveragePrice()}
+            </p>
+          </div>
+          <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-5">
+            <div className="flex items-start justify-between mb-2">
+              <p className="text-sm text-gray-400">Grand Total</p>
+              <div className="p-2 bg-amber-500/20 rounded-lg">
+                <Wallet className="w-4 h-4 text-amber-400" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-white">
+              ₹{calculateGrandTotal()}
+            </p>
+          </div>
         </div>
-        <div className="bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-xl p-5">
-          <p className="text-sm text-gray-400 mb-1">Total Sub-Services</p>
-          <p className="text-3xl font-bold text-white">
-            {services.reduce((sum, s) => sum + s.subServices.length, 0)}
-          </p>
-        </div>
-        <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-xl p-5">
-          <p className="text-sm text-gray-400 mb-1">Average Price</p>
-          <p className="text-3xl font-bold text-white">
-            ₹{calculateAveragePrice()}
-          </p>
-        </div>
-        <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-5">
-          <p className="text-sm text-gray-400 mb-1">Grand Total</p>
-          <p className="text-3xl font-bold text-white">
-            ₹{calculateGrandTotal()}
-          </p>
+
+        {/* Search Bar */}
+        <div className="relative max-w-md mx-auto ">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search services..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all duration-300"
+          />
         </div>
       </div>
 
       {/* Pricing Tables */}
       <div className="space-y-6">
-        {services.map((service) => (
+        {filteredServices.map((service) => (
           <div
             key={service.id}
             className="bg-gray-800/50 border border-gray-700 rounded-xl overflow-hidden hover:border-amber-500/30 transition-all duration-300"
@@ -150,7 +192,7 @@ const Pricing = () => {
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex items-center justify-end gap-2">
-                          <DollarSign className="w-4 h-4 text-gray-400" />
+                          <IndianRupee className="w-4 h-4 text-gray-400" />
                           <span className="text-lg font-semibold text-white">
                             {sub.pricePerDay}
                           </span>

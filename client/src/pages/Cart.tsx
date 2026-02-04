@@ -12,8 +12,19 @@ const Cart = () => {
     cart.forEach((item, index) => {
       message += `📸 *Service ${index + 1}: ${item.serviceName}*\n`;
       item.subServices.forEach((sub) => {
+        const unit =
+          sub.pricingType === "manual"
+            ? sub.customUnit || "units"
+            : sub.pricingType === "per-piece"
+              ? "pcs"
+              : sub.pricingType === "per-hour"
+                ? "hours"
+                : sub.pricingType === "per-event"
+                  ? "event"
+                  : "days";
+
         message += `   • ${sub.name}\n`;
-        message += `     Days: ${sub.days} | Price: ₹${sub.pricePerDay}/day | Subtotal: ₹${sub.pricePerDay * sub.days}\n`;
+        message += `     Quantity: ${sub.days} ${unit} | Price: ₹${sub.pricePerDay}/${unit} | Subtotal: ₹${sub.pricePerDay * sub.days}\n`;
       });
       message += `   Service Total: ₹${item.totalPrice}\n\n`;
     });
@@ -144,23 +155,36 @@ const Cart = () => {
 
                 {/* Sub-services */}
                 <div className="space-y-3 mb-4">
-                  {item.subServices.map((sub) => (
-                    <div
-                      key={sub.id}
-                      className="flex items-center justify-between py-3 border-b border-white/5"
-                    >
-                      <div>
-                        <div className="text-white font-medium">{sub.name}</div>
-                        <div className="text-sm text-gray-400">
-                          {sub.days} day{sub.days > 1 ? "s" : ""} × ₹
-                          {sub.pricePerDay}
+                  {item.subServices.map((sub) => {
+                    const unit =
+                      sub.pricingType === "manual"
+                        ? sub.customUnit || "units"
+                        : sub.pricingType === "per-piece"
+                          ? "pcs"
+                          : sub.pricingType === "per-hour"
+                            ? "hours"
+                            : sub.pricingType === "per-event"
+                              ? "event"
+                              : "days";
+                    return (
+                      <div
+                        key={sub.id}
+                        className="flex items-center justify-between py-3 border-b border-white/5"
+                      >
+                        <div>
+                          <div className="text-white font-medium">
+                            {sub.name}
+                          </div>
+                          <div className="text-sm text-gray-400">
+                            {sub.days} {unit} × ₹{sub.pricePerDay}
+                          </div>
+                        </div>
+                        <div className="text-amber-400 font-semibold">
+                          ₹{sub.pricePerDay * sub.days}
                         </div>
                       </div>
-                      <div className="text-amber-400 font-semibold">
-                        ₹{sub.pricePerDay * sub.days}
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* Service Total */}

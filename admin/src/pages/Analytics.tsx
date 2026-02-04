@@ -37,7 +37,7 @@ const Analytics = () => {
   return (
     <div className="p-8 space-y-8 animate-fadeIn">
       {/* Header */}
-      <div>
+      <div className="text-center">
         <h2 className="text-2xl font-bold text-white">Analytics & Insights</h2>
         <p className="text-sm text-gray-400 mt-1">
           Track performance and service statistics

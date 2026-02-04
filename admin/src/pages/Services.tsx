@@ -58,7 +58,8 @@ const Services = () => {
   return (
     <div className="p-8 space-y-6 animate-fadeIn">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      {/* Header */}
+      <div className="flex flex-col items-center justify-center gap-6 text-center">
         <div>
           <h2 className="text-2xl font-bold text-white">Services Management</h2>
           <p className="text-sm text-gray-400 mt-1">
