@@ -16,7 +16,6 @@ import {
   onSnapshot,
   writeBatch,
   query,
-  orderBy,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import toast from "react-hot-toast";
@@ -25,7 +24,7 @@ const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 export const AdminProvider = ({ children }: { children: ReactNode }) => {
   const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
 
   // Subscribe to Firestore updates
   useEffect(() => {

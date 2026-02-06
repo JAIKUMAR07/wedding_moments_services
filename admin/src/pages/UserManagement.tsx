@@ -10,7 +10,6 @@ import {
   Mail,
   Camera,
   Phone,
-  AlertTriangle,
 } from "lucide-react";
 import {
   collection,
