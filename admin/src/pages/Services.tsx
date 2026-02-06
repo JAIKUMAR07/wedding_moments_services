@@ -13,7 +13,8 @@ import ServiceModal from "../components/ServiceModal";
 import type { Service } from "../types";
 
 const Services = () => {
-  const { services, deleteService, toggleServiceStatus } = useAdmin();
+  const { services, deleteService, toggleServiceStatus } =
+    useAdmin();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState<
     "all" | "active" | "inactive"
@@ -66,13 +67,15 @@ const Services = () => {
             Manage your photography services and packages
           </p>
         </div>
-        <button
-          onClick={handleAddNew}
-          className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          Add Service
-        </button>
+        <div className="flex gap-4">
+          <button
+            onClick={handleAddNew}
+            className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            Add Service
+          </button>
+        </div>
       </div>
 
       {/* Filters */}
