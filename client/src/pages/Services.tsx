@@ -1,21 +1,46 @@
 import { useState, useEffect } from "react";
 import ServiceCard from "../components/ServiceCard";
-import { services } from "../data/services";
-import { OFFERS, FESTIVE_BADGE } from "../data/offers";
+import { useServices } from "../context/ServicesContext";
+import { useOffers } from "../context/OffersContext";
+import { Helmet } from "react-helmet-async";
+import { config } from "../config";
+
+// Fallback values when no offers in DB
+const DEFAULT_TICKER = "🎉 Special offers coming soon! Stay tuned.";
+const DEFAULT_BADGE = { title: "SPECIAL", mainText: "NEW", subText: "OFFER" };
 
 const Services = () => {
+  const { services, loading, error } = useServices();
+  const { tickerOffers, badgeOffer } = useOffers();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
   const [animationStage, setAnimationStage] = useState("idle");
 
+  // Get ticker messages from offers - just use description directly
+  const tickerMessages =
+    tickerOffers.length > 0
+      ? tickerOffers.map((o) => o.description)
+      : [DEFAULT_TICKER];
+
+  // Get badge content - admin stores: code=title, description=discount text
+  const festiveBadge = badgeOffer
+    ? {
+        title: badgeOffer.code,
+        mainText: badgeOffer.description.split(" ")[0] || "25%", // Extract "20-25%" from "20-25% OFF"
+        subText: "OFF",
+      }
+    : DEFAULT_BADGE;
+
   useEffect(() => {
+    if (tickerMessages.length === 0) return;
+
     const interval = setInterval(() => {
       // 1. Slide OUT to Left
       setAnimationStage("exiting");
 
       setTimeout(() => {
         // 2. Update Text and Snap to Right (Instant)
-        setCurrentOfferIndex((prev) => (prev + 1) % OFFERS.length);
+        setCurrentOfferIndex((prev) => (prev + 1) % tickerMessages.length);
         setAnimationStage("entering");
 
         // 3. Small delay then Slide IN to Center
@@ -28,7 +53,7 @@ const Services = () => {
     }, 4000); // Change every 4 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [tickerMessages.length]);
 
   const getTransitionClass = () => {
     switch (animationStage) {
@@ -51,6 +76,13 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
+      <Helmet>
+        <title>Our Services | {config.studioName}</title>
+        <meta
+          name="description"
+          content={`Explore our range of professional photography services. From weddings to birthdays, we make every moment count.`}
+        />
+      </Helmet>
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16 animate-fadeInUp">
@@ -65,7 +97,7 @@ const Services = () => {
               <span
                 className={`text-amber-300 font-medium text-sm tracking-wide text-center block ${getTransitionClass()}`}
               >
-                {OFFERS[currentOfferIndex]}
+                {tickerMessages[currentOfferIndex]}
               </span>
               <svg
                 className="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform flex-shrink-0"
@@ -146,14 +178,14 @@ const Services = () => {
                   {/* Badge Content */}
                   <div className="relative z-10 text-center transform -rotate-12">
                     <div className="bg-gradient-to-r from-red-600 to-rose-700 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full mb-1 shadow-lg border border-red-400/50 ring-2 ring-red-500/30">
-                      {FESTIVE_BADGE.title}
+                      {festiveBadge.title}
                     </div>
                     <div className="font-black text-white leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
                       <span className="text-3xl md:text-4xl block font-serif tracking-tighter">
-                        {FESTIVE_BADGE.mainText}
+                        {festiveBadge.mainText}
                       </span>
                       <span className="text-sm md:text-base tracking-[0.3em] block uppercase text-amber-200">
-                        {FESTIVE_BADGE.subText}
+                        {festiveBadge.subText}
                       </span>
                     </div>
                   </div>
@@ -195,7 +227,15 @@ const Services = () => {
         </div>
 
         {/* Services Grid */}
-        {filteredServices.length > 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-12 bg-red-500/10 rounded-2xl border border-red-500/20 max-w-2xl mx-auto">
+            <p className="text-red-400">{error}</p>
+          </div>
+        ) : filteredServices.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredServices.map((service) => (
               <ServiceCard key={service.id} service={service} />

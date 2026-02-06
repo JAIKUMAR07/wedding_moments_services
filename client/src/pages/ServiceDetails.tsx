@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getServiceById } from "../data/services";
+import { useServices } from "../context/ServicesContext";
 import { useCart } from "../context/CartContext";
 import type { SubService } from "../types";
 
@@ -8,11 +8,20 @@ const ServiceDetails = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { getServiceById, loading } = useServices();
   const service = serviceId ? getServiceById(serviceId) : undefined;
 
   const [selectedSubServices, setSelectedSubServices] = useState<SubService[]>(
     [],
   );
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+      </div>
+    );
+  }
 
   if (!service) {
     return (

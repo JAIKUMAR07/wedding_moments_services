@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import WelcomeSection from "../components/WelcomeSection";
+import ExclusiveWorkSection from "../components/ExclusiveWorkSection";
+import BookingStepsSection from "../components/BookingStepsSection";
+import TestimonialsSection from "../components/TestimonialsSection";
+import { config } from "../config";
 
 const Home = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black">
+      <Helmet>
+        <title>{config.studioName} | Professional Wedding Photography</title>
+        <meta
+          name="description"
+          content={`Welcome to ${config.studioName}. We specialize in capturing your most precious wedding moments with elegance and style.`}
+        />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative h-screen w-full overflow-hidden">
+        {/* ... (Hero content remains unchanged) ... */}
         {/* Background Image - Fixed */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
@@ -98,6 +112,16 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Welcome Section */}
+      <WelcomeSection />
+
+      {/* Exclusive Work Section */}
+      <ExclusiveWorkSection />
+      {/* Booking Steps Section */}
+      <BookingStepsSection />
+      {/* Testimonials Section */}
+      <TestimonialsSection />
     </div>
   );
 };

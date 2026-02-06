@@ -3,11 +3,10 @@
 
 export const config = {
   // Studio Information
-  studioName: import.meta.env.VITE_STUDIO_NAME || "Wedding Moments Studio",
+  studioName: "Wedding Moments Studio",
   studioDescription:
-    import.meta.env.VITE_STUDIO_DESCRIPTION ||
     "Capturing life's most precious moments with professional photography services.",
-  studioAddress: import.meta.env.VITE_STUDIO_ADDRESS || "",
+  studioAddress: "Your Studio Address, City, State",
 
   // Contact Information
   contact: {

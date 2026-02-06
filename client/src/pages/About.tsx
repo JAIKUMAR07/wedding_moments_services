@@ -1,6 +1,18 @@
+import AboutStorySection from "../components/AboutStorySection";
+import AboutShopSection from "../components/AboutShopSection";
+import { Helmet } from "react-helmet-async";
+import { config } from "../config";
+
 const About = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
+      <Helmet>
+        <title>About Us | {config.studioName}</title>
+        <meta
+          name="description"
+          content={`Learn more about ${config.studioName}, our passionate team, and our journey in capturing timeless memories.`}
+        />
+      </Helmet>
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16 animate-fadeInUp">
@@ -10,45 +22,16 @@ const About = () => {
               Us
             </span>
           </h1>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Creating timeless memories through the art of photography
-          </p>
         </div>
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {/* Image */}
-          <div className="relative h-96 lg:h-auto rounded-2xl overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?q=80&w=1000"
-              alt="Photography Studio"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-          </div>
+        {/* About Shop Section */}
+        <div className="mb-20">
+          <AboutShopSection />
+        </div>
 
-          {/* Content */}
-          <div className="flex flex-col justify-center space-y-6">
-            <h2 className="text-4xl font-serif font-bold text-white">
-              Wedding Moments Studio
-            </h2>
-            <p className="text-lg text-gray-300 leading-relaxed">
-              We are a professional photography studio dedicated to capturing
-              life's most precious moments. With years of experience and a
-              passion for visual storytelling, we specialize in creating
-              stunning images that you'll cherish forever.
-            </p>
-            <p className="text-lg text-gray-300 leading-relaxed">
-              From intimate baby shoots to grand wedding celebrations, outdoor
-              adventures to creative film projects, we bring expertise,
-              creativity, and state-of-the-art equipment to every session.
-            </p>
-            <p className="text-lg text-gray-300 leading-relaxed">
-              Our team of skilled photographers and videographers work closely
-              with you to understand your vision and deliver results that exceed
-              expectations.
-            </p>
-          </div>
+        {/* About Story Section */}
+        <div className="mb-20">
+          <AboutStorySection />
         </div>
 
         {/* Features */}

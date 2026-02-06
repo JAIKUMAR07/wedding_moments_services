@@ -15,6 +15,14 @@ export interface Service {
   image: string;
   offer?: string;
   subServices: Omit<SubService, "days">[];
+  isActive?: boolean;
+}
+
+export interface ServicesContextType {
+  services: Service[];
+  loading: boolean;
+  error: string | null;
+  getServiceById: (id: string) => Service | undefined;
 }
 
 export interface CartItem {

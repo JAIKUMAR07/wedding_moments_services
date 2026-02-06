@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { useCart } from "../context/CartContext";
 import { config } from "../config";
 
@@ -53,6 +54,10 @@ const Cart = () => {
   if (cart.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
+        <Helmet>
+          <title>Your Cart | {config.studioName}</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
         <div className="container mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto">
             <div className="mb-8">
@@ -90,6 +95,14 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
+      <Helmet>
+        <title>Your Cart | {config.studioName}</title>
+        <meta
+          name="description"
+          content="Review your selected photography services and complete your booking request."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
