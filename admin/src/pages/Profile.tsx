@@ -1,18 +1,23 @@
-import { useState } from "react";
-import { User, Mail, Lock, Camera, Save, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { User, Mail, Lock, Camera, Save, LogOut, Phone } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
+import toast from "react-hot-toast";
 
 const Profile = () => {
+  const { currentUser, logout } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
 
-  // Mock admin data
   const [adminData, setAdminData] = useState({
-    name: "Admin User",
-    email: "admin@wedding.com",
-    role: "Super Admin",
-    username: "superadmin_01",
+    name: "",
+    email: "",
+    role: "",
+    phone: "",
     avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200",
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200", // Default or fetch if available
   });
 
   const [formData, setFormData] = useState({ ...adminData });
@@ -21,6 +26,51 @@ const Profile = () => {
     new: "",
     confirm: "",
   });
+
+  // Fetch real user data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!currentUser) return;
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          const profileData = {
+            name: data.name || currentUser.displayName || "User",
+            email: data.email || currentUser.email || "",
+            role: data.role || "User",
+            phone: data.phone || "",
+            avatar:
+              data.avatar ||
+              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200",
+          };
+          setAdminData(profileData);
+          setFormData(profileData);
+        } else {
+          // Fallback to auth data if no firestore doc
+          const fallbackData = {
+            name: currentUser.displayName || "User",
+            email: currentUser.email || "",
+            role: "User",
+            phone: "",
+            avatar:
+              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200",
+          };
+          setAdminData(fallbackData);
+          setFormData(fallbackData);
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        toast.error("Failed to load profile data");
+      } finally {
+        setFetching(false);
+      }
+    };
+
+    fetchUserData();
+  }, [currentUser]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,15 +82,35 @@ const Profile = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    if (!currentUser) return;
 
-    // Simulate API call
-    setTimeout(() => {
+    setIsLoading(true);
+    try {
+      const userRef = doc(db, "users", currentUser.uid);
+      await updateDoc(userRef, {
+        name: formData.name,
+        phone: formData.phone,
+        // Add other fields if necessary
+      });
+
       setAdminData(formData);
       setIsEditing(false);
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast.error("Failed to update profile");
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
+
+  if (fetching) {
+    return (
+      <div className="flex justify-center items-center h-64 text-amber-500">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-current"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 space-y-8 animate-fadeIn max-w-4xl mx-auto">
@@ -82,7 +152,10 @@ const Profile = () => {
             </p>
 
             <div className="mt-6 pt-6 border-t border-gray-700/50 flex justify-center">
-              <button className="flex items-center gap-2 text-gray-400 hover:text-red-400 transition-colors text-sm font-medium px-4 py-2 hover:bg-red-500/10 rounded-lg">
+              <button
+                onClick={() => logout()}
+                className="flex items-center gap-2 text-gray-400 hover:text-red-400 transition-colors text-sm font-medium px-4 py-2 hover:bg-red-500/10 rounded-lg"
+              >
                 <LogOut className="w-4 h-4" />
                 Sign Out
               </button>
@@ -126,20 +199,6 @@ const Profile = () => {
 
                 <div className="space-y-2">
                   <label className="text-sm text-gray-400 font-medium">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    name="username"
-                    value={isEditing ? formData.username : adminData.username}
-                    onChange={handleChange}
-                    disabled={!isEditing}
-                    className="w-full px-4 py-2.5 bg-gray-900/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
-                  />
-                </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm text-gray-400 font-medium">
                     Email Address
                   </label>
                   <div className="relative">
@@ -150,6 +209,24 @@ const Profile = () => {
                       value={isEditing ? formData.email : adminData.email}
                       onChange={handleChange}
                       disabled={!isEditing}
+                      className="w-full pl-10 pr-4 py-2.5 bg-gray-900/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm text-gray-400 font-medium">
+                    Mobile Number
+                  </label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={isEditing ? formData.phone : adminData.phone}
+                      onChange={handleChange}
+                      disabled={!isEditing}
+                      placeholder="+91 98765 43210"
                       className="w-full pl-10 pr-4 py-2.5 bg-gray-900/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
                     />
                   </div>

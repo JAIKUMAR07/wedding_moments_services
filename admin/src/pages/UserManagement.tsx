@@ -64,6 +64,38 @@ const UserManagement = () => {
   const [view, setView] = useState<"list" | "register">("list");
   const [loading, setLoading] = useState(false);
 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checkingRole, setCheckingRole] = useState(true);
+
+  // Check if current user is admin
+  useEffect(() => {
+    const checkRole = async () => {
+      if (!currentUser) return;
+
+      try {
+        // First check locally if we already have the user in our list
+        // This is an optimization if users list is already loaded, but safe to fetch doc directly
+        const userDoc = await import("firebase/firestore").then((mod) =>
+          mod.getDoc(doc(db, "users", currentUser.uid)),
+        );
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data() as UserProfile;
+          setIsAdmin(userData.role === "Admin");
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error("Error checking user role:", error);
+        setIsAdmin(false);
+      } finally {
+        setCheckingRole(false);
+      }
+    };
+
+    checkRole();
+  }, [currentUser]);
+
   // New User Form State
   const [newUser, setNewUser] = useState({
     name: "",
@@ -172,7 +204,7 @@ const UserManagement = () => {
   const handleDeleteUser = async (userId: string) => {
     if (
       !window.confirm(
-        "Are you sure you want to delete this user from the logic record? (Note: This does not delete them from Authentication)",
+        "Are you sure you want to delete this user? Their account data will be removed, and they will no longer be able to log in.",
       )
     ) {
       return;
@@ -208,14 +240,30 @@ const UserManagement = () => {
     );
   }
 
-  // Helper check for admin role if needed, currently we assume login = admin access for this panel
-  // or checks strictly in Firestore rules.
-  // We don't have a 'role' on 'currentUser' object directly unless we fetch the user doc or custom claims.
-  // For now, we allow any logged-in user to see this page based on "Access Restricted" logic below?
-  // Actually, the previous code had role simulation. We'll simplify to just show for now
-  // or fetch *my* role.
-  // For simplicity requested ("her is only admin and user registation allow no super admin okay"),
-  // we will just show the UI.
+  if (checkingRole) {
+    return (
+      <div className="flex justify-center items-center h-64 text-amber-500">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-current"></div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 animate-fadeIn">
+        <div className="bg-red-500/10 p-6 rounded-full mb-6">
+          <Lock className="w-16 h-16 text-red-500" />
+        </div>
+        <h2 className="text-3xl font-bold text-white mb-2">
+          Access Restricted
+        </h2>
+        <p className="text-gray-400 max-w-md mx-auto">
+          You don't have permission to access the User Management page. This
+          area is restricted to administrators only.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 space-y-8 animate-fadeIn">

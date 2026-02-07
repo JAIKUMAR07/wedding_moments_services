@@ -56,13 +56,9 @@ const ExclusiveWorkSection = () => {
     <section className="bg-zinc-900 py-24 border-t border-white/5">
       <div className="container mx-auto">
         <div className="text-center mb-16 space-y-4">
-          <p className="text-amber-400/80 text-sm font-medium tracking-[0.2em] uppercase">
-            Our Exclusive Client's
-          </p>
-          <h2 className="text-4xl md:text-5xl font-serif text-white capitalize">
-            Our Exclusive Clients
+          <h2 className="text-4xl md:text-5xl font-serif text-amber-400 capitalize">
+            Our Exclusive Works
           </h2>
-          <div className="w-px h-16 bg-gradient-to-b from-amber-400 to-transparent mx-auto mt-8"></div>
         </div>
 
         <div className="relative group px-6">

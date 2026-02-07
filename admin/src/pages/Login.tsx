@@ -17,12 +17,35 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const user = userCredential.user;
+
+      // Check if user exists in Firestore 'users' collection
+      // If deleted from there, we deny access
+      const { doc, getDoc } = await import("firebase/firestore");
+      const { db } = await import("../lib/firebase");
+      const { signOut } = await import("firebase/auth");
+
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (!userDocSnap.exists()) {
+        // User deleted from DB, so deny login
+        await signOut(auth);
+        throw new Error("Account has been deactivated or deleted.");
+      }
+
       // Login successful, redirect to dashboard or home
       navigate("/");
     } catch (err: any) {
       console.error("Login error:", err);
-      if (err.code === "auth/invalid-credential") {
+      if (err.message === "Account has been deactivated or deleted.") {
+        setError(err.message);
+      } else if (err.code === "auth/invalid-credential") {
         setError("Invalid email or password.");
       } else if (err.code === "auth/too-many-requests") {
         setError("Too many attempts. Please try again later.");

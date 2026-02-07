@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useServices } from "../context/ServicesContext";
 import { useCart } from "../context/CartContext";
 import type { SubService } from "../types";
+import { Helmet } from "react-helmet-async";
+import { config as staticConfig } from "../config";
 
 const ServiceDetails = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { addToCart } = useCart();
   const { getServiceById, loading } = useServices();
   const service = serviceId ? getServiceById(serviceId) : undefined;
 
   const [selectedSubServices, setSelectedSubServices] = useState<SubService[]>(
-    [],
+    location.state?.initialSubServices || [],
   );
 
   if (loading) {
@@ -26,6 +29,10 @@ const ServiceDetails = () => {
   if (!service) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
+        <Helmet>
+          <title>Service Not Found | {staticConfig.studioName}</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
         <div className="text-center">
           <h2 className="text-3xl font-serif text-white mb-4">
             Service Not Found
@@ -103,7 +110,13 @@ const ServiceDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
+    <div className="min-h-screen bg-linear-to-b from-black via-gray-900 to-black py-20">
+      <Helmet>
+        <title>
+          {service.name} | {staticConfig.studioName}
+        </title>
+        <meta name="description" content={service.description} />
+      </Helmet>
       <div className="container mx-auto px-6">
         {/* Back Button */}
         <button
@@ -134,7 +147,7 @@ const ServiceDetails = () => {
               alt={service.name}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
           </div>
 
           {/* Service Info */}
@@ -143,16 +156,16 @@ const ServiceDetails = () => {
               {service.name}
             </h1>
             <p className="text-xl text-gray-400 mb-8">{service.description}</p>
-
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-              <h3 className="text-2xl font-serif font-semibold text-white mb-4">
-                Available Services
-              </h3>
-              <p className="text-gray-400 mb-6">
-                Select the services you need and choose the number of days
-              </p>
-            </div>
           </div>
+        </div>
+
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 mb-8">
+          <h3 className="text-2xl font-serif font-semibold text-white mb-4">
+            Available Services
+          </h3>
+          <p className="text-gray-400 mb-6">
+            Select the services you need and choose the quantity/days.
+          </p>
         </div>
 
         {/* Sub-Services Selection */}
@@ -184,21 +197,23 @@ const ServiceDetails = () => {
                       )}
                       <p className="text-amber-400 text-lg font-medium">
                         ₹{subService.pricePerDay} INR{" "}
-                        {subService.pricingType === "manual"
-                          ? subService.customUnit || ""
-                          : subService.pricingType === "per-piece"
-                            ? "per piece"
-                            : subService.pricingType === "per-hour"
-                              ? "per hour"
-                              : subService.pricingType === "per-event"
-                                ? "per event"
-                                : "per day"}
+                        <span className="text-sm text-gray-400">
+                          {subService.pricingType === "manual"
+                            ? subService.customUnit || "unit"
+                            : subService.pricingType === "per-piece"
+                              ? "per piece"
+                              : subService.pricingType === "per-hour"
+                                ? "per hour"
+                                : subService.pricingType === "per-event"
+                                  ? "per event"
+                                  : "per day"}
+                        </span>
                       </p>
                     </div>
                   </div>
 
                   {/* Quantity Selector */}
-                  <div className="flex items-center gap-6">
+                  <div className="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-end gap-4 sm:gap-6 w-full md:w-auto mt-4 md:mt-0">
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() => handleDaysChange(subService.id, -1)}
@@ -233,8 +248,10 @@ const ServiceDetails = () => {
 
                     {/* Subtotal */}
                     {isSelected && (
-                      <div className="text-right min-w-[120px]">
-                        <div className="text-sm text-gray-400">Subtotal</div>
+                      <div className="text-right min-w-[100px] sm:min-w-[120px]">
+                        <div className="text-xs text-gray-400 uppercase tracking-wider">
+                          Subtotal
+                        </div>
                         <div className="text-xl font-bold text-amber-400">
                           ₹
                           {getSubServiceTotal(
@@ -253,7 +270,7 @@ const ServiceDetails = () => {
         </div>
 
         {/* Total and Add to Cart */}
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
+        <div className="backdrop-blur-sm border border-white/10 rounded-2xl p-8 sticky bottom-6 z-20 shadow-2xl bg-black/80 backdrop-saturate-150">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
               <h3 className="text-2xl font-serif font-semibold text-white mb-2">
@@ -275,9 +292,9 @@ const ServiceDetails = () => {
               <button
                 onClick={handleAddToCart}
                 disabled={selectedSubServices.length === 0}
-                className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-amber-500 disabled:hover:to-amber-600"
+                className="px-8 py-4 bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-amber-500 disabled:hover:to-amber-600 w-full md:w-auto text-lg"
               >
-                Add to Cart
+                {location.state?.editMode ? "Update Cart" : "Add to Cart"}
               </button>
             </div>
           </div>

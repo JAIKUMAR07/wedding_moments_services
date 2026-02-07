@@ -9,6 +9,7 @@ import {
   Megaphone,
   User,
   Users,
+  Share2,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -52,6 +53,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       path: "/profile",
       icon: User,
       label: "Profile",
+    },
+    {
+      path: "/social",
+      icon: Share2,
+      label: "Social Links",
     },
     {
       path: "/settings",

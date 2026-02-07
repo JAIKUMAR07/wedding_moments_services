@@ -3,7 +3,8 @@ import ServiceCard from "../components/ServiceCard";
 import { useServices } from "../context/ServicesContext";
 import { useOffers } from "../context/OffersContext";
 import { Helmet } from "react-helmet-async";
-import { config } from "../config";
+import { config as staticConfig } from "../config";
+import { useConfig } from "../context/ConfigContext";
 
 // Fallback values when no offers in DB
 const DEFAULT_TICKER = "🎉 Special offers coming soon! Stay tuned.";
@@ -12,6 +13,7 @@ const DEFAULT_BADGE = { title: "SPECIAL", mainText: "NEW", subText: "OFFER" };
 const Services = () => {
   const { services, loading, error } = useServices();
   const { tickerOffers, badgeOffer } = useOffers();
+  const { getWhatsAppLink } = useConfig();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
   const [animationStage, setAnimationStage] = useState("idle");
@@ -75,9 +77,9 @@ const Services = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
+    <div className="min-h-screen bg-linear-to-b from-black via-gray-900 to-black py-20">
       <Helmet>
-        <title>Our Services | {config.studioName}</title>
+        <title>Our Services | {staticConfig.studioName}</title>
         <meta
           name="description"
           content={`Explore our range of professional photography services. From weddings to birthdays, we make every moment count.`}
@@ -88,7 +90,7 @@ const Services = () => {
         <div className="text-center mb-16 animate-fadeInUp">
           {/* Global Offer Badge */}
           <div className="inline-block mb-6 relative group cursor-pointer w-full max-w-2xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-red-500 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300 animate-pulse"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-amber-400 to-red-500 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300 animate-pulse"></div>
             <div className="relative bg-black/40 backdrop-blur-md border border-amber-500/30 rounded-full px-6 py-2 flex items-center justify-center gap-3 hover:border-amber-400/60 transition-colors duration-300 min-h-[44px] overflow-hidden">
               <span className="flex h-3 w-3 relative flex-shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -118,7 +120,7 @@ const Services = () => {
           <div className="relative max-w-4xl mx-auto mb-4">
             <h1 className="text-5xl md:text-7xl font-serif font-bold text-white relative z-10 inline-block">
               Our{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400 to-amber-600">
                 Services
               </span>
             </h1>
@@ -177,7 +179,7 @@ const Services = () => {
 
                   {/* Badge Content */}
                   <div className="relative z-10 text-center transform -rotate-12">
-                    <div className="bg-gradient-to-r from-red-600 to-rose-700 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full mb-1 shadow-lg border border-red-400/50 ring-2 ring-red-500/30">
+                    <div className="bg-linear-to-r from-red-600 to-rose-700 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full mb-1 shadow-lg border border-red-400/50 ring-2 ring-red-500/30">
                       {festiveBadge.title}
                     </div>
                     <div className="font-black text-white leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
@@ -277,10 +279,12 @@ const Services = () => {
               needs. Contact us to discuss your requirements.
             </p>
             <a
-              href="https://wa.me/919876543210"
+              href={getWhatsAppLink(
+                "Hi! I'm interested in a custom photography package.",
+              )}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50"
+              className="inline-block px-8 py-4 bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50"
             >
               Contact Us on WhatsApp
             </a>

@@ -4,16 +4,18 @@ import WelcomeSection from "../components/WelcomeSection";
 import ExclusiveWorkSection from "../components/ExclusiveWorkSection";
 import BookingStepsSection from "../components/BookingStepsSection";
 import TestimonialsSection from "../components/TestimonialsSection";
-import { config } from "../config";
+import { config as staticConfig } from "../config";
 
 const Home = () => {
   return (
     <div className="min-h-screen bg-black">
       <Helmet>
-        <title>{config.studioName} | Professional Wedding Photography</title>
+        <title>
+          {staticConfig.studioName} | Professional Wedding Photography
+        </title>
         <meta
           name="description"
-          content={`Welcome to ${config.studioName}. We specialize in capturing your most precious wedding moments with elegance and style.`}
+          content={`Welcome to ${staticConfig.studioName}. We specialize in capturing your most precious wedding moments with elegance and style.`}
         />
       </Helmet>
       {/* Hero Section */}

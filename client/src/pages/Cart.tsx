@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useCart } from "../context/CartContext";
-import { config } from "../config";
+import { config as staticConfig } from "../config";
+import { useConfig } from "../context/ConfigContext";
 
 const Cart = () => {
   const navigate = useNavigate();
   const { cart, removeFromCart, clearCart, getCartTotal } = useCart();
+  const { getWhatsAppLink, getMailtoLink } = useConfig();
 
   const generateBookingMessage = (): string => {
-    let message = `🎉 *Booking Request - ${config.studioName}*\n\n`;
+    let message = `🎉 *Booking Request - ${staticConfig.studioName}*\n\n`;
 
     cart.forEach((item, index) => {
       message += `📸 *Service ${index + 1}: ${item.serviceName}*\n`;
@@ -39,23 +41,25 @@ const Cart = () => {
 
   const handleWhatsAppBooking = () => {
     const message = generateBookingMessage();
-    const whatsappUrl = config.getWhatsAppLink(message);
+    const whatsappUrl = getWhatsAppLink(message);
     window.open(whatsappUrl, "_blank");
+    clearCart();
   };
 
   const handleGmailBooking = () => {
     const message = generateBookingMessage();
-    const subject = `Booking Request - ${config.studioName}`;
-    const body = message.replace(/\*/g, "");
-    const gmailUrl = config.getMailtoLink(subject, body);
+    const subject = `Booking Request - ${staticConfig.studioName}`;
+    const body = message.replace(/\*/g, ""); // Remove bold formatting for email
+    const gmailUrl = getMailtoLink(subject, body);
     window.location.href = gmailUrl;
+    clearCart();
   };
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
+      <div className="min-h-screen bg-linear-to-b from-black via-gray-900 to-black py-20">
         <Helmet>
-          <title>Your Cart | {config.studioName}</title>
+          <title>Your Cart | {staticConfig.studioName}</title>
           <meta name="robots" content="noindex, nofollow" />
         </Helmet>
         <div className="container mx-auto px-6">
@@ -83,7 +87,7 @@ const Cart = () => {
             </p>
             <button
               onClick={() => navigate("/services")}
-              className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50"
+              className="px-8 py-4 bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50"
             >
               Browse Services
             </button>
@@ -94,9 +98,9 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
+    <div className="min-h-screen bg-linear-to-b from-black via-gray-900 to-black py-20">
       <Helmet>
-        <title>Your Cart | {config.studioName}</title>
+        <title>Your Cart | {staticConfig.studioName}</title>
         <meta
           name="description"
           content="Review your selected photography services and complete your booking request."
@@ -108,7 +112,7 @@ const Cart = () => {
         <div className="flex items-center justify-between mb-12">
           <h1 className="text-5xl font-serif font-bold text-white">
             Your{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400 to-amber-600">
               Cart
             </span>
           </h1>
@@ -145,25 +149,53 @@ const Cart = () => {
                   <h3 className="text-2xl font-serif font-semibold text-white">
                     {item.serviceName}
                   </h3>
-                  <button
-                    onClick={() => removeFromCart(item.serviceId)}
-                    className="text-red-400 hover:text-red-300 transition-colors"
-                    aria-label="Remove service"
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() =>
+                        navigate(`/services/${item.serviceId}`, {
+                          state: {
+                            editMode: true,
+                            initialSubServices: item.subServices,
+                          },
+                        })
+                      }
+                      className="text-amber-400 hover:text-amber-300 transition-colors"
+                      aria-label="Edit service"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => removeFromCart(item.serviceId)}
+                      className="text-red-400 hover:text-red-300 transition-colors"
+                      aria-label="Remove service"
+                    >
+                      <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
 
                 {/* Sub-services */}
@@ -250,7 +282,7 @@ const Cart = () => {
               <div className="space-y-3">
                 <button
                   onClick={handleWhatsAppBooking}
-                  className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/50"
+                  className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-linear-to-r from-green-500 to-green-600 text-white font-semibold rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/50"
                 >
                   <svg
                     className="w-6 h-6"

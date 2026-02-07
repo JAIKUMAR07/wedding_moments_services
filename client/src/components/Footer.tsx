@@ -1,7 +1,9 @@
-import { config } from "../config";
+import { config as staticConfig } from "../config";
+import { useConfig } from "../context/ConfigContext";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { social, getMailtoLink, getWhatsAppLink } = useConfig();
 
   return (
     <footer className="bg-black border-t border-white/10">
@@ -10,10 +12,10 @@ const Footer = () => {
           {/* About Section */}
           <div>
             <h3 className="text-xl font-serif font-semibold text-white mb-4">
-              {config.studioName}
+              {staticConfig.studioName}
             </h3>
             <p className="text-gray-400 leading-relaxed">
-              {config.studioDescription}
+              {staticConfig.studioDescription}
             </p>
           </div>
 
@@ -38,10 +40,10 @@ const Footer = () => {
                   />
                 </svg>
                 <a
-                  href={config.getMailtoLink()}
+                  href={getMailtoLink()}
                   className="hover:text-amber-400 transition-colors"
                 >
-                  {config.contact.email}
+                  {social.email}
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -59,10 +61,10 @@ const Footer = () => {
                   />
                 </svg>
                 <a
-                  href={`tel:${config.contact.phone}`}
+                  href={`tel:${social.phone}`}
                   className="hover:text-amber-400 transition-colors"
                 >
-                  {config.contact.phone}
+                  {social.phone}
                 </a>
               </li>
             </ul>
@@ -75,7 +77,7 @@ const Footer = () => {
             </h3>
             <div className="flex gap-4">
               <a
-                href={config.social.instagram}
+                href={social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-amber-500 flex items-center justify-center transition-all duration-300 hover:scale-110"
@@ -90,7 +92,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href={config.social.facebook}
+                href={social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-amber-500 flex items-center justify-center transition-all duration-300 hover:scale-110"
@@ -105,7 +107,22 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href={config.getWhatsAppLink()}
+                href={social.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-amber-500 flex items-center justify-center transition-all duration-300 hover:scale-110"
+                aria-label="YouTube"
+              >
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+              </a>
+              <a
+                href={getWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-amber-500 flex items-center justify-center transition-all duration-300 hover:scale-110"
@@ -120,13 +137,37 @@ const Footer = () => {
                 </svg>
               </a>
             </div>
+            {social.address && (
+              <div className="mt-6 flex items-start gap-3 text-gray-400">
+                <svg
+                  className="w-5 h-5 text-amber-400 shrink-0 mt-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                <p className="text-sm leading-relaxed">{social.address}</p>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Copyright */}
         <div className="pt-8 border-t border-white/10 text-center text-gray-400 text-sm">
           <p>
-            © {currentYear} {config.studioName}. All rights reserved.
+            © {currentYear} {staticConfig.studioName}. All rights reserved.
           </p>
         </div>
       </div>

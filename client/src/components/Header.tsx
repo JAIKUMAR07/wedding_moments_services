@@ -1,14 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useState } from "react";
-
+import { config } from "../config";
 const Header = () => {
-  const location = useLocation();
+  const { pathname } = useLocation();
   const { cart } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => {
-    return location.pathname === path;
+    return pathname === path;
   };
 
   const navItems = [
@@ -56,7 +56,7 @@ const Header = () => {
               />
             </svg>
             <span className="text-lg md:text-xl font-serif font-semibold text-white group-hover:text-amber-400 transition-colors">
-              <span className="hidden sm:inline">Wedding Moments</span>
+              <span className="hidden sm:inline">{config.studioName}</span>
               <span className="sm:hidden">WM Studio</span>
             </span>
           </Link>

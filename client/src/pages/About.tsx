@@ -1,16 +1,19 @@
 import AboutStorySection from "../components/AboutStorySection";
 import AboutShopSection from "../components/AboutShopSection";
 import { Helmet } from "react-helmet-async";
-import { config } from "../config";
+import { config as staticConfig } from "../config";
+import { useConfig } from "../context/ConfigContext";
 
 const About = () => {
+  const { getMailtoLink, getWhatsAppLink } = useConfig();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
       <Helmet>
-        <title>About Us | {config.studioName}</title>
+        <title>About Us | {staticConfig.studioName}</title>
         <meta
           name="description"
-          content={`Learn more about ${config.studioName}, our passionate team, and our journey in capturing timeless memories.`}
+          content={`Learn more about ${staticConfig.studioName}, our passionate team, and our journey in capturing timeless memories.`}
         />
       </Helmet>
       <div className="container mx-auto px-6">
@@ -119,7 +122,7 @@ const About = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/919876543210"
+              href={getWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50"
@@ -127,7 +130,7 @@ const About = () => {
               Contact Us on WhatsApp
             </a>
             <a
-              href="mailto:info@weddingmoments.com"
+              href={getMailtoLink()}
               className="px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300"
             >
               Send us an Email

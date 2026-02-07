@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { config } from "../config";
+import { config as staticConfig } from "../config";
 
 // Mock data for gallery images
 const galleryCategories = [
@@ -108,10 +108,10 @@ const Gallery = () => {
   return (
     <div className="bg-black min-h-screen text-white pb-20">
       <Helmet>
-        <title>Our Work | {config.studioName}</title>
+        <title>Our Work | {staticConfig.studioName}</title>
         <meta
           name="description"
-          content={`Browse the portfolio of ${config.studioName}. See our latest weddings, pre-wedding shoots, and event photography.`}
+          content={`Browse the portfolio of ${staticConfig.studioName}. See our latest weddings, pre-wedding shoots, and event photography.`}
         />
       </Helmet>
 

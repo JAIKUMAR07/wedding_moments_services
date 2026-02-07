@@ -5,10 +5,14 @@ import App from "./App.tsx";
 
 import { HelmetProvider } from "react-helmet-async";
 
+import { ConfigProvider } from "./context/ConfigContext";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HelmetProvider>
-      <App />
+      <ConfigProvider>
+        <App />
+      </ConfigProvider>
     </HelmetProvider>
   </StrictMode>,
 );

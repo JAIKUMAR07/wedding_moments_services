@@ -10,6 +10,8 @@ import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import UserManagement from "./pages/UserManagement";
+import SocialManagement from "./pages/SocialManagement";
+import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import { AdminProvider } from "./context/AdminContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -116,6 +118,19 @@ function DashboardLayout() {
               </>
             }
           />
+          <Route
+            path="/social"
+            element={
+              <>
+                <Header
+                  title="Social & Contact"
+                  onMenuClick={handleMenuClick}
+                />
+                <SocialManagement />
+              </>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>

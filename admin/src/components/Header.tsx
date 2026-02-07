@@ -1,4 +1,7 @@
 import { Search, Bell, User, LogOut, Menu } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface HeaderProps {
   title: string;
@@ -6,12 +9,30 @@ interface HeaderProps {
 }
 
 const Header = ({ title, onMenuClick }: HeaderProps) => {
+  const { logout, currentUser } = useAuth();
+  const navigate = useNavigate();
+
   const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   });
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+      toast.success("Logged out successfully");
+    } catch (error) {
+      console.error("Failed to logout", error);
+      toast.error("Failed to logout");
+    }
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
 
   return (
     <header className="sticky top-0 z-30 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
@@ -63,11 +84,19 @@ const Header = ({ title, onMenuClick }: HeaderProps) => {
 
           {/* User */}
           <div className="hidden sm:flex items-center gap-3">
-            <div className="text-right hidden lg:block">
-              <p className="text-sm font-medium text-white">Admin User</p>
-              <p className="text-xs text-gray-400">admin@wedding.com</p>
+            <div
+              className="text-right hidden lg:block cursor-pointer"
+              onClick={handleProfileClick}
+            >
+              <p className="text-sm font-medium text-white">
+                {currentUser?.email?.split("@")[0] || "Admin"}
+              </p>
+              <p className="text-xs text-gray-400">
+                {currentUser?.email || "admin@wedding.com"}
+              </p>
             </div>
             <button
+              onClick={handleProfileClick}
               className="p-2 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 rounded-lg transition-colors"
               title="User profile"
               aria-label="View user profile"
@@ -78,6 +107,7 @@ const Header = ({ title, onMenuClick }: HeaderProps) => {
 
           {/* Logout */}
           <button
+            onClick={handleLogout}
             className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-800 rounded-lg transition-colors"
             title="Logout"
             aria-label="Logout from admin dashboard"
