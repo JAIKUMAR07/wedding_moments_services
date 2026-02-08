@@ -8,29 +8,28 @@ export const config = {
     "Capturing life's most precious moments with professional photography services.",
   studioAddress: "Your Studio Address, City, State",
 
-  // Contact Information
+  // Contact Information - Defaults until loaded from DB
   contact: {
-    email: import.meta.env.VITE_CONTACT_EMAIL || "info@weddingmoments.com",
-    phone: import.meta.env.VITE_CONTACT_PHONE || "+91 98765 43210",
-    whatsapp: import.meta.env.VITE_WHATSAPP_NUMBER || "919876543210",
+    email: "info@weddingmoments.com",
+    phone: "+91 98765 43210",
+    whatsapp: "919876543210",
   },
 
-  // Social Media
+  // Social Media - Defaults until loaded from DB
   social: {
-    instagram: import.meta.env.VITE_INSTAGRAM_URL || "https://instagram.com",
-    facebook: import.meta.env.VITE_FACEBOOK_URL || "https://facebook.com",
-    twitter: import.meta.env.VITE_TWITTER_URL || "https://twitter.com",
+    instagram: "https://instagram.com",
+    facebook: "https://facebook.com",
+    twitter: "https://twitter.com",
   },
 
   // Helper functions
   getWhatsAppLink: (message?: string) => {
-    const baseUrl = `https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER || "919876543210"}`;
+    const baseUrl = `https://wa.me/919876543210`;
     return message ? `${baseUrl}?text=${encodeURIComponent(message)}` : baseUrl;
   },
 
   getMailtoLink: (subject?: string, body?: string) => {
-    const email =
-      import.meta.env.VITE_CONTACT_EMAIL || "info@weddingmoments.com";
+    const email = "info@weddingmoments.com";
     let link = `mailto:${email}`;
     const params = [];
     if (subject) params.push(`subject=${encodeURIComponent(subject)}`);

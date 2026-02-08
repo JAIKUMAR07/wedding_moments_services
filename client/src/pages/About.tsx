@@ -8,7 +8,7 @@ const About = () => {
   const { getMailtoLink, getWhatsAppLink } = useConfig();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-20">
+    <div className="min-h-screen bg-linear-to-b from-black via-gray-900 to-black py-20">
       <Helmet>
         <title>About Us | {staticConfig.studioName}</title>
         <meta
@@ -21,7 +21,7 @@ const About = () => {
         <div className="text-center mb-16 animate-fadeInUp">
           <h1 className="text-5xl md:text-6xl font-serif font-bold text-white mb-4">
             About{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400 to-amber-600">
               Us
             </span>
           </h1>
@@ -125,7 +125,7 @@ const About = () => {
               href={getWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50"
+              className="px-8 py-4 bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50"
             >
               Contact Us on WhatsApp
             </a>

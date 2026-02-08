@@ -65,7 +65,7 @@ const WelcomeSection = () => {
             <div className="pt-4 animate-fadeInUp animation-delay-600">
               <Link
                 to="/about"
-                className="inline-block px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 uppercase tracking-wide text-sm shadow-lg hover:shadow-amber-500/50"
+                className="inline-block px-8 py-3 bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 uppercase tracking-wide text-sm shadow-lg hover:shadow-amber-500/50"
               >
                 Know More
               </Link>

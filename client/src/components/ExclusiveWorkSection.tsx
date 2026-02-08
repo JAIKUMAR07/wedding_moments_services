@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const clients = [
   {
@@ -68,20 +69,7 @@ const ExclusiveWorkSection = () => {
             className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 p-3 rounded-full text-white hover:bg-amber-600 hover:text-white transition-all duration-300 backdrop-blur-sm -ml-2 lg:-ml-6 hidden md:block"
             aria-label="Scroll left"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 19.5L8.25 12l7.5-7.5"
-              />
-            </svg>
+            <ChevronLeft className="w-6 h-6" />
           </button>
 
           {/* Carousel Container */}
@@ -93,9 +81,9 @@ const ExclusiveWorkSection = () => {
             {clients.map((client) => (
               <div
                 key={client.id}
-                className="flex-none w-[300px] md:w-[350px] aspect-[3/4] relative group/card cursor-pointer snap-center"
+                className="flex-none w-[300px] md:w-[350px] aspect-3/4 relative group/card cursor-pointer snap-center"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 z-10 transition-opacity duration-300 group-hover/card:opacity-40"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent opacity-60 z-10 transition-opacity duration-300 group-hover/card:opacity-40"></div>
                 <img
                   src={client.image}
                   alt={client.name}
@@ -117,20 +105,7 @@ const ExclusiveWorkSection = () => {
             className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 p-3 rounded-full text-white hover:bg-amber-600 hover:text-white transition-all duration-300 backdrop-blur-sm -mr-2 lg:-mr-6 hidden md:block"
             aria-label="Scroll right"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8.25 4.5l7.5 7.5-7.5 7.5"
-              />
-            </svg>
+            <ChevronRight className="w-6 h-6" />
           </button>
         </div>
       </div>

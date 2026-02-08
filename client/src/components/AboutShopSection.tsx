@@ -12,7 +12,7 @@ const AboutShopSection = () => {
           <h2 className="text-4xl md:text-5xl font-serif text-white">
             The {config.studioName}
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-linear-to-r from-transparent via-amber-500 to-transparent mx-auto rounded-full"></div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

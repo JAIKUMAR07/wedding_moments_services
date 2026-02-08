@@ -13,7 +13,7 @@ const NotFound = () => {
       <div className="max-w-lg w-full space-y-8 animate-fadeIn">
         <div className="relative">
           <div className="absolute inset-0 bg-amber-500/20 blur-3xl rounded-full"></div>
-          <h1 className="relative text-9xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-b from-amber-200 to-amber-600">
+          <h1 className="relative text-9xl font-serif font-bold text-transparent bg-clip-text bg-linear-to-b from-amber-200 to-amber-600">
             404
           </h1>
         </div>

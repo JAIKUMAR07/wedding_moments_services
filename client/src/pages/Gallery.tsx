@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { X } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { config as staticConfig } from "../config";
 
@@ -116,9 +117,9 @@ const Gallery = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <div className="relative py-20 px-6 bg-gradient-to-b from-zinc-900 to-black">
+      <div className="relative py-20 px-6 bg-linear-to-b from-zinc-900 to-black">
         <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 mb-6">
+          <h1 className="text-4xl md:text-6xl font-serif font-bold text-transparent bg-clip-text bg-linear-to-r from-amber-200 to-amber-500 mb-6">
             Our Gallery
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
@@ -184,20 +185,7 @@ const Gallery = () => {
               className="absolute top-4 right-4 text-white hover:text-amber-400 z-50"
               aria-label="Close gallery modal"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <X className="h-8 w-8" />
             </button>
             <img
               src={selectedImage.src}
