@@ -1,0 +1,9 @@
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow cart page (not useful for SEO)
+Disallow: /cart
+
+# Sitemap location
+Sitemap: https://weddingmomentsstudio.com/sitemap.xml

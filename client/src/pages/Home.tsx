@@ -15,6 +15,31 @@ const Home = () => {
         </title>
         <meta
           name="description"
+          content={`Welcome to ${staticConfig.studioName}. We specialize in capturing your most precious wedding moments with elegance and style. Professional photography services for weddings, pre-wedding shoots, birthdays, and special events.`}
+        />
+        <meta
+          name="keywords"
+          content="wedding photography, professional photographer, wedding moments, pre-wedding shoot, birthday photography, event photography, wedding videography, candid photography"
+        />
+
+        {/* Open Graph */}
+        <meta
+          property="og:title"
+          content={`${staticConfig.studioName} | Professional Wedding Photography`}
+        />
+        <meta
+          property="og:description"
+          content={`Welcome to ${staticConfig.studioName}. We specialize in capturing your most precious wedding moments with elegance and style.`}
+        />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter */}
+        <meta
+          name="twitter:title"
+          content={`${staticConfig.studioName} | Professional Wedding Photography`}
+        />
+        <meta
+          name="twitter:description"
           content={`Welcome to ${staticConfig.studioName}. We specialize in capturing your most precious wedding moments with elegance and style.`}
         />
       </Helmet>

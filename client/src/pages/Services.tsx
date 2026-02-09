@@ -29,7 +29,7 @@ const Services = () => {
     ? {
         title: badgeOffer.code,
         mainText: badgeOffer.description.split(" ")[0] || "25%", // Extract "20-25%" from "20-25% OFF"
-        subText: "OFF",
+        subText: badgeOffer.description.split(" ")[1] || "OFF",
       }
     : DEFAULT_BADGE;
 
@@ -82,7 +82,31 @@ const Services = () => {
         <title>Our Services | {staticConfig.studioName}</title>
         <meta
           name="description"
-          content={`Explore our range of professional photography services. From weddings to birthdays, we make every moment count.`}
+          content="Explore our range of professional photography services. From weddings to birthdays, we make every moment count. Book your photography session today."
+        />
+        <meta
+          name="keywords"
+          content="photography services, wedding packages, birthday photography, pre-wedding shoot, event photography, professional photo services, photography pricing"
+        />
+
+        {/* Open Graph */}
+        <meta
+          property="og:title"
+          content={`Our Services | ${staticConfig.studioName}`}
+        />
+        <meta
+          property="og:description"
+          content="Explore our range of professional photography services. From weddings to birthdays, we make every moment count."
+        />
+
+        {/* Twitter */}
+        <meta
+          name="twitter:title"
+          content={`Our Services | ${staticConfig.studioName}`}
+        />
+        <meta
+          name="twitter:description"
+          content="Explore our range of professional photography services. From weddings to birthdays, we make every moment count."
         />
       </Helmet>
       <div className="container mx-auto px-6">
