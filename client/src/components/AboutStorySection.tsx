@@ -14,7 +14,7 @@ const AboutStorySection = () => {
             <div className="relative aspect-3/4 w-full max-w-md mx-auto lg:max-w-none rounded-2xl overflow-hidden shadow-2xl shadow-black/50 group">
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent z-10"></div>
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
+                src="profile/profile.jpeg"
                 alt="Photographer Portrait"
                 className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105 filter brightness-90 group-hover:brightness-100"
               />

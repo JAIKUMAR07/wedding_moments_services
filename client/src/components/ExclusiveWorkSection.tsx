@@ -4,39 +4,45 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const clients = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1511285560982-1351cdeb9821?q=80&w=1000",
+    image: "weddingShoot/20.webp",
+    name: "Bride Shoot ",
+  },
+
+  {
+    id: 1,
+    image: "weddingShoot/6.webp",
     name: "Wedding Ceremony",
   },
   {
-    id: 2,
-    image:
-      "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1000",
-    name: "Royal Reception",
+    id: 1,
+    image: "weddingShoot/9.webp",
+    name: "Haldi Ceremony",
   },
   {
-    id: 3,
-    image:
-      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000",
-    name: "Pre-Wedding Shoot",
+    id: 1,
+    image: "weddingShoot/19.webp",
+    name: "Bride Shoot",
+  },
+
+  {
+    id: 1,
+    image: "preWeddingShoot/14.webp",
+    name: "Pre-wdding Shoot",
   },
   {
-    id: 4,
-    image:
-      "https://images.unsplash.com/photo-1623838279864-4e427fa78089?q=80&w=1000",
-    name: "Traditional Rials",
+    id: 1,
+    image: "weddingShoot/18.webp",
+    name: "Bride Shoot",
   },
   {
-    id: 5,
-    image:
-      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=1000",
-    name: "Birthday Bash",
+    id: 1,
+    image: "preWeddingShoot/14.webp",
+    name: "Photo Shoot",
   },
   {
-    id: 6,
-    image:
-      "https://images.unsplash.com/photo-1549417229-aa67d3263c09?q=80&w=1000",
-    name: "Cultural Event",
+    id: 1,
+    image: "babyShoot/4.webp",
+    name: "Baby Shoot",
   },
 ];
 

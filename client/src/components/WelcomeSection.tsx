@@ -11,7 +11,7 @@ const WelcomeSection = () => {
               {/* Image Strip 1 */}
               <div className="flex flex-col gap-4 mt-8 animate-fadeInUp">
                 <img
-                  src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000"
+                  src="weddingShoot/20.webp"
                   alt="Wedding detail"
                   className="w-full h-full object-cover rounded-full opacity-80 hover:opacity-100 transition-opacity duration-500"
                 />
@@ -20,7 +20,7 @@ const WelcomeSection = () => {
               {/* Image Strip 2 */}
               <div className="flex flex-col gap-4 -mt-8 animate-fadeInUp animation-delay-200">
                 <img
-                  src="https://images.unsplash.com/photo-1623838279864-4e427fa78089?q=80&w=1000"
+                  src="weddingShoot/18.webp"
                   alt="Bride portrait"
                   className="w-full h-full object-cover rounded-full opacity-80 hover:opacity-100 transition-opacity duration-500"
                 />
@@ -29,7 +29,7 @@ const WelcomeSection = () => {
               {/* Image Strip 3 */}
               <div className="flex flex-col gap-4 mt-4 animate-fadeInUp animation-delay-400">
                 <img
-                  src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=1000"
+                  src="weddingShoot/19.webp"
                   alt="Couple moment"
                   className="w-full h-full object-cover rounded-full opacity-80 hover:opacity-100 transition-opacity duration-500"
                 />
@@ -38,7 +38,7 @@ const WelcomeSection = () => {
               {/* Image Strip 4 */}
               <div className="flex flex-col gap-4 -mt-4 animate-fadeInUp animation-delay-600">
                 <img
-                  src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000"
+                  src="weddingShoot/18.webp"
                   alt="Groom portrait"
                   className="w-full h-full object-cover rounded-full opacity-80 hover:opacity-100 transition-opacity duration-500"
                 />

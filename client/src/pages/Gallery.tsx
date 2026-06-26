@@ -6,95 +6,152 @@ import { config as staticConfig } from "../config";
 // Mock data for gallery images
 const galleryCategories = [
   {
-    title: "Wedding",
+    title: "Wedding Shoot",
     images: [
       {
-        id: "w1",
-        src: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000",
-        alt: "Wedding Couple",
-        className: "aspect-[3/4]",
-      },
-      {
-        id: "w2",
-        src: "https://images.unsplash.com/photo-1511285560982-1351cdeb9821?q=80&w=1000",
-        alt: "Wedding Ceremony",
-        className: "aspect-video",
-      },
-      {
-        id: "w3",
-        src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1000",
-        alt: "Wedding Details",
-        className: "aspect-square",
-      },
-      {
-        id: "w4",
-        src: "https://images.unsplash.com/photo-1519225448526-0a0295155809?q=80&w=1000",
-        alt: "Bride and Groom",
-        className: "aspect-[2/3]",
-      },
-      {
-        id: "w5",
-        src: "https://images.unsplash.com/photo-1553102674-af685bb5fe40?q=80&w=1000",
+        id: "ws1",
+        src: "weddingShoot/19.webp",
         alt: "Wedding Outdoor",
-        className: "aspect-[4/3]",
+        // className: "aspect-[3/4]",
+      },
+      {
+        id: "ws7",
+        src: "weddingShoot/20.webp",
+        alt: "Wedding Outdoor",
+      },
+
+      {
+        id: "ws4",
+        src: "weddingShoot/6.webp",
+        alt: "Wedding Outdoor",
+      },
+
+      {
+        id: "ws2",
+        src: "weddingShoot/7.webp",
+        alt: "Wedding Outdoor",
+      },
+
+      {
+        id: "ws6",
+        src: "weddingShoot/9.webp",
+        alt: "Wedding Outdoor",
+      },
+
+      {
+        id: "ws5",
+        src: "weddingShoot/18.webp",
+        alt: "Wedding Outdoor",
       },
     ],
   },
   {
-    title: "Birthday Party",
+    title: "Baby-Shoot",
     images: [
       {
-        id: "b1",
-        src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=1000",
-        alt: "Birthday Cake",
-        className: "aspect-square",
+        id: "bs3",
+        src: "babyShoot/4.webp",
+        alt: "Baby Picture",
       },
       {
-        id: "b2",
-        src: "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?q=80&w=1000",
-        alt: "Birthday Celebration",
-        className: "aspect-video",
+        id: "bs8",
+        src: "babyShoot/23.webp",
+        alt: "Baby Picture",
       },
       {
-        id: "b3",
-        src: "https://images.unsplash.com/photo-1502086223501-8351e090653d?q=80&w=1000",
-        alt: "Kids Party",
-        className: "aspect-[3/4]",
+        id: "bs6",
+        src: "babyShoot/17.webp",
+        alt: "Baby Picture",
       },
       {
-        id: "b4",
-        src: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?q=80&w=1000",
-        alt: "Party Balloons",
-        className: "aspect-[2/3]",
+        id: "bs2",
+        src: "babyShoot/2.webp",
+        alt: "Baby Picture",
+      },
+
+      {
+        id: "bs10",
+        src: "babyShoot/25.webp",
+        alt: "Baby Picture",
+      },
+      {
+        id: "bs1",
+        src: "babyShoot/1.webp",
+        alt: "Baby Picture",
+      },
+      {
+        id: "bs5",
+        src: "babyShoot/11.webp",
+        alt: "Baby Picture",
+      },
+
+      {
+        id: "bs7",
+        src: "babyShoot/22.webp",
+        alt: "Baby Picture",
+      },
+
+      {
+        id: "bs4",
+        src: "babyShoot/5.webp",
+        alt: "Baby Picture",
+      },
+      {
+        id: "bs9",
+        src: "babyShoot/24.webp",
+        alt: "Baby Picture",
       },
     ],
   },
   {
-    title: "Pre-Wedding",
+    title: "Pre-Wedding Shoot",
     images: [
       {
-        id: "p1",
-        src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000",
-        alt: "Pre-wedding Outdoor",
-        className: "aspect-[3/4]",
+        id: "ws12",
+        src: "preWeddingShoot/30.webp",
+        alt: "Wedding Picture",
       },
       {
-        id: "p2",
-        src: "https://images.unsplash.com/photo-1623838279864-4e427fa78089?q=80&w=1000",
-        alt: "Couple Shoot",
-        className: "aspect-video",
+        id: "ws12",
+        src: "preWeddingShoot/14.webp",
+        alt: "Wedding Picture",
+      },
+
+      {
+        id: "ws12",
+        src: "preWeddingShoot/26.webp",
+        alt: "Wedding Picture",
+      },
+
+      {
+        id: "ws1",
+        src: "preWeddingShoot/10.webp",
+        alt: "Wedding Picture",
       },
       {
-        id: "p3",
-        src: "https://images.unsplash.com/photo-1632152862080-606c4b2b1011?q=80&w=1000",
-        alt: "Romantic Pose",
-        className: "aspect-[4/5]",
+        id: "ws12",
+        src: "preWeddingShoot/13.webp",
+        alt: "Wedding Picture",
       },
       {
-        id: "p4",
-        src: "https://images.unsplash.com/photo-1522673607200-1645062cd955?q=80&w=1000",
-        alt: "Engagement",
-        className: "aspect-square",
+        id: "ws12",
+        src: "preWeddingShoot/27.webp",
+        alt: "Wedding Picture",
+      },
+      {
+        id: "ws12",
+        src: "preWeddingShoot/28.webp",
+        alt: "Wedding Picture",
+      },
+      {
+        id: "ws12",
+        src: "preWeddingShoot/29.webp",
+        alt: "Wedding Picture",
+      },
+      {
+        id: "ws12",
+        src: "preWeddingShoot/15.webp",
+        alt: "Wedding Picture",
       },
     ],
   },
@@ -154,7 +211,7 @@ const Gallery = () => {
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className={`w-full object-cover rounded-lg shadow-lg shadow-black/50 ${image.className}`}
+                    className={`w-full object-cover rounded-lg shadow-lg shadow-black/50  `}
                     loading="lazy"
                   />
                   {/* Overlay */}

@@ -34,10 +34,17 @@ const Login = () => {
       const userDocSnap = await getDoc(userDocRef);
 
       if (!userDocSnap.exists()) {
-        // User deleted from DB, so deny login
+        // User not in DB, deny login
         await signOut(auth);
         throw new Error("Account has been deactivated or deleted.");
       }
+
+      // Optional: If you only want Admins to log into this portal at all, you could uncomment this:
+      // const userData = userDocSnap.data();
+      // if (userData?.role !== "Admin") {
+      //   await signOut(auth);
+      //   throw new Error("Access Denied: Administrator privileges required.");
+      // }
 
       // Login successful, redirect to dashboard or home
       navigate("/");
