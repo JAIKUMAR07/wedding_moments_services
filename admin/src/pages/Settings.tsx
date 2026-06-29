@@ -4,6 +4,27 @@ import { FileJson } from "lucide-react";
 const Settings = () => {
   const { services } = useAdmin();
 
+  const totalSubServices = services.reduce(
+    (sum, s) => sum + (s.subServices?.length || 0),
+    0
+  );
+  const storageUsed = Math.round(JSON.stringify(services).length / 1024);
+  const lastUpdatedTimestamp = services.reduce((latest, service) => {
+    if (!service.updatedAt) return latest;
+    const current = new Date(service.updatedAt).getTime();
+    return current > latest ? current : latest;
+  }, 0);
+  
+  let lastUpdatedStr = "N/A";
+  if (lastUpdatedTimestamp > 0) {
+    const date = new Date(lastUpdatedTimestamp);
+    lastUpdatedStr = date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
   return (
     <div className="p-4 sm:p-6 lg:p-8 space-y-8 animate-fadeIn">
       {/* Header */}
@@ -35,23 +56,15 @@ const Settings = () => {
           </div>
           <div className="bg-gray-900/50 rounded-lg p-4">
             <p className="text-xs text-gray-400 mb-1">Total Sub-Services</p>
-            <p className="text-2xl font-bold text-white">
-              {services.reduce((sum, s) => sum + s.subServices.length, 0)}
-            </p>
+            <p className="text-2xl font-bold text-white">{totalSubServices}</p>
           </div>
           <div className="bg-gray-900/50 rounded-lg p-4">
             <p className="text-xs text-gray-400 mb-1">Storage Used</p>
-            <p className="text-2xl font-bold text-white">
-              {Math.round(JSON.stringify(services).length / 1024)} KB
-            </p>
+            <p className="text-2xl font-bold text-white">{storageUsed} KB</p>
           </div>
           <div className="bg-gray-900/50 rounded-lg p-4">
             <p className="text-xs text-gray-400 mb-1">Last Updated</p>
-            <p className="text-2xl font-bold text-white">
-              {services[0]?.updatedAt
-                ? new Date(services[0].updatedAt).toLocaleDateString()
-                : "N/A"}
-            </p>
+            <p className="text-2xl font-bold text-white">{lastUpdatedStr}</p>
           </div>
         </div>
       </div>

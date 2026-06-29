@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { User, Mail, Lock, Camera, Save, LogOut, Phone } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
+} from "firebase/auth";
 import { db } from "../lib/firebase";
 import toast from "react-hot-toast";
 
@@ -26,6 +31,59 @@ const Profile = () => {
     new: "",
     confirm: "",
   });
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!currentUser || !currentUser.email) return;
+
+    const { current, new: newPass, confirm } = passwords;
+
+    if (!current || !newPass || !confirm) {
+      toast.error("Please fill in all password fields");
+      return;
+    }
+
+    if (newPass !== confirm) {
+      toast.error("New password and confirm password do not match");
+      return;
+    }
+
+    if (newPass.length < 6) {
+      toast.error("New password must be at least 6 characters long");
+      return;
+    }
+
+    setIsUpdatingPassword(true);
+    const toastId = toast.loading("Updating password...");
+
+    try {
+      const credential = EmailAuthProvider.credential(
+        currentUser.email,
+        current,
+      );
+      await reauthenticateWithCredential(currentUser, credential);
+      await updatePassword(currentUser, newPass);
+
+      toast.success("Password updated successfully", { id: toastId });
+      setPasswords({ current: "", new: "", confirm: "" });
+    } catch (error: any) {
+      console.error("Error updating password:", error);
+      if (
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/invalid-login-credentials"
+      ) {
+        toast.error("Incorrect current password", { id: toastId });
+      } else {
+        toast.error(error.message || "Failed to update password", {
+          id: toastId,
+        });
+      }
+    } finally {
+      setIsUpdatingPassword(false);
+    }
+  };
 
   // Fetch real user data
   useEffect(() => {
@@ -268,7 +326,10 @@ const Profile = () => {
               Security Settings
             </h3>
 
-            <div className="space-y-4 max-w-lg">
+            <form
+              onSubmit={handleUpdatePassword}
+              className="space-y-4 max-w-lg"
+            >
               <div className="space-y-2">
                 <label className="text-sm text-gray-400 font-medium">
                   Current Password
@@ -314,11 +375,18 @@ const Profile = () => {
               </div>
 
               <div className="pt-2">
-                <button className="px-6 py-2.5 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors w-full sm:w-auto">
-                  Update Password
+                <button
+                  type="submit"
+                  disabled={isUpdatingPassword}
+                  className="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors w-full sm:w-auto disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {isUpdatingPassword ? (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : null}
+                  {isUpdatingPassword ? "Updating..." : "Update Password"}
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

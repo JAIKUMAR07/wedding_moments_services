@@ -202,6 +202,11 @@ const UserManagement = () => {
   };
 
   const handleDeleteUser = async (userId: string) => {
+    if (userId === currentUser?.uid) {
+      toast.error("You cannot delete your own account.");
+      return;
+    }
+
     if (
       !window.confirm(
         "Are you sure you want to delete this user? Their account data will be removed, and they will no longer be able to log in.",
@@ -399,13 +404,15 @@ const UserManagement = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => handleDeleteUser(user.id)}
-                        className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
-                        title="Delete User"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      {user.id !== currentUser?.uid && (
+                        <button
+                          onClick={() => handleDeleteUser(user.id)}
+                          className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+                          title="Delete User"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}

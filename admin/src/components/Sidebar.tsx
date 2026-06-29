@@ -11,6 +11,10 @@ import {
   Users,
   Share2,
 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -18,6 +22,24 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const { currentUser } = useAuth();
+  const [role, setRole] = useState("Admin");
+
+  useEffect(() => {
+    const fetchRole = async () => {
+      if (!currentUser) return;
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setRole(userDoc.data().role || "Admin");
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+    fetchRole();
+  }, [currentUser]);
   const navItems = [
     {
       path: "/",
@@ -91,9 +113,9 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           <div className="flex items-center justify-between p-6 border-b border-gray-800">
             <div>
               <h1 className="text-2xl font-bold text-amber-400">
-                Wedding Moments
+                Studio Wedding Moments
               </h1>
-              <p className="text-xs text-gray-400 mt-1">Admin Dashboard</p>
+              <p className="text-xs text-gray-400 mt-1">{role} Dashboard</p>
             </div>
             {/* Mobile Close Button */}
             <button
