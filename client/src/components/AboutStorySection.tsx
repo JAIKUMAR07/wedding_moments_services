@@ -1,4 +1,3 @@
-import { config } from "../config";
 import { Phone, Mail } from "lucide-react";
 import { useConfig } from "../context/ConfigContext";
 

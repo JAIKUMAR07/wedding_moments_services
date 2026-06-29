@@ -40,7 +40,7 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
     phone: defaultConfig.contact.phone,
     whatsapp: defaultConfig.contact.whatsapp,
     website: "",
-    address: defaultConfig.studioAddress,
+    address: "",
   });
   const [loading, setLoading] = useState(true);
 
