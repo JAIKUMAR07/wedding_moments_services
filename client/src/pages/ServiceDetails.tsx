@@ -11,12 +11,14 @@ const ServiceDetails = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
   const { getServiceById, loading } = useServices();
   const service = serviceId ? getServiceById(serviceId) : undefined;
 
+  // Pre-load from cart if this service was already added before, or from edit mode state
+  const existingCartItem = cart.find((item) => item.serviceId === serviceId);
   const [selectedSubServices, setSelectedSubServices] = useState<SubService[]>(
-    location.state?.initialSubServices || [],
+    location.state?.initialSubServices || existingCartItem?.subServices || [],
   );
 
   if (loading) {
