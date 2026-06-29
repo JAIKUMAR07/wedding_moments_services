@@ -71,7 +71,8 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const getWhatsAppLink = (message?: string) => {
-    const cleanNumber = social.whatsapp.replace(/\D/g, "");
+    const rawNumber = social.whatsapp || defaultConfig.contact.whatsapp;
+    const cleanNumber = rawNumber.replace(/\D/g, "");
     const baseUrl = `https://wa.me/${cleanNumber}`;
     return message ? `${baseUrl}?text=${encodeURIComponent(message)}` : baseUrl;
   };

@@ -23,7 +23,7 @@ export const config = {
 
   // Helper functions
   getWhatsAppLink: (message?: string) => {
-    const baseUrl = `https://wa.me/919876543210`;
+    const baseUrl = `https://wa.me/919989516846`;
     return message ? `${baseUrl}?text=${encodeURIComponent(message)}` : baseUrl;
   },
 
