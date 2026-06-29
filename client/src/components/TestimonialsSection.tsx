@@ -45,9 +45,6 @@ const TestimonialsSection = () => {
   return (
     <section className="bg-zinc-900 py-24 overflow-hidden border-t border-white/5">
       <div className="container mx-auto px-6 mb-12 text-center">
-        <p className="text-amber-400/80 text-sm font-medium tracking-[0.2em] uppercase mb-4">
-          Testimonials
-        </p>
         <h2 className="text-4xl md:text-5xl font-serif text-white">
           What Our Clients Say
         </h2>

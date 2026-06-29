@@ -17,19 +17,21 @@ const HeroSection = () => {
 
       {/* Content Container */}
       <div className="relative z-10 flex h-full items-center pt-24 pb-20">
-        <div className="container mx-auto px-6 md:px-12 lg:px-20">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
           <div className="max-w-3xl space-y-4 animate-fadeInUp">
             {/* Main Heading */}
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-serif text-white leading-tight animate-slideInLeft animation-delay-300">
               Capturing Life's Most
-              <br />
+              <br />{" "}
+            </h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight animate-slideInLeft animation-delay-300">
               <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400 via-amber-300 to-yellow-200">
                 Precious Moments
               </span>
             </h1>
 
             {/* Description */}
-            <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl animate-slideInLeft animation-delay-400">
+            <p className="text-lg md:text-xl   text-gray-300 leading-relaxed max-w-2xl animate-slideInLeft animation-delay-400">
               Choose from our curated photography sessions and send your booking
               request directly to us via WhatsApp or Gmail.
             </p>
@@ -54,21 +56,7 @@ const HeroSection = () => {
                 </span>
               </Link>
             </div>
-
-            {/* Scroll Indicator */}
-            <div className="flex items-center gap-3 pt-4 text-amber-400 animate-slideInLeft animation-delay-800">
-              <div className="w-12 h-[2px] bg-linear-to-r from-amber-400 to-transparent"></div>
-            </div>
           </div>
-        </div>
-      </div>
-
-      {/* Decorative Elements */}
-
-      {/* Scroll Down Animation */}
-      <div className="absolute  bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
-          <div className="w-1 h-2 bg-white/50 rounded-full animate-scrollDown"></div>
         </div>
       </div>
     </section>

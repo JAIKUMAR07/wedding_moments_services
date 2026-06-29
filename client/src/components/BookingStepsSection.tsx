@@ -53,10 +53,7 @@ const BookingStepsSection = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16 space-y-4">
-          <p className="text-amber-400/80 text-sm font-medium tracking-[0.2em] uppercase">
-            How It Works
-          </p>
-          <h2 className="text-4xl md:text-5xl font-serif text-white">
+          <h2 className="text-4xl md:text-5xl font-serif   text-amber-400">
             Simple Booking Steps
           </h2>
           <div className="w-16 h-1 bg-linear-to-r from-transparent via-amber-500 to-transparent mx-auto rounded-full"></div>

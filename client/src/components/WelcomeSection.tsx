@@ -38,7 +38,7 @@ const WelcomeSection = () => {
               {/* Image Strip 4 */}
               <div className="flex flex-col gap-4 -mt-4 animate-fadeInUp animation-delay-600">
                 <img
-                  src="weddingShoot/18.webp"
+                  src="weddingShoot/2.webp"
                   alt="Groom portrait"
                   className="w-full h-full object-cover rounded-full opacity-80 hover:opacity-100 transition-opacity duration-500"
                 />
@@ -48,24 +48,25 @@ const WelcomeSection = () => {
 
           {/* Right Side: Content */}
           <div className="w-full lg:w-1/2 text-center lg:text-left space-y-6">
-            <span className="text-amber-400 text-lg font-medium tracking-wider uppercase font-sans mb-2 block animate-fadeInUp">
+            <span className=" text-2xl md:text-3xl lg:text-3xl   text-amber-400 text-lg font-medium tracking-wider uppercase font-sans mb-2 block animate-fadeInUp">
               Welcome To
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight animate-fadeInUp animation-delay-200">
-              Wedding Moments Studio
+              Studio Wedding Moments
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed animate-fadeInUp animation-delay-400">
-              Step into Wedding Moments Studio, where passion meets precision in
-              every frame. With expertise spanning portraits, landscapes, and
-              events, our award-winning studio transforms moments into timeless
-              treasures. Let us capture your story with creativity and flair,
-              ensuring memories that last a lifetime.
+              Every wedding tells a story filled with love, laughter, and
+              unforgettable emotions. At Studio Wedding Moments , we capture
+              those precious moments with creativity, precision, and a cinematic
+              touch. From the first smile to the final farewell, our team
+              ensures every photograph becomes a timeless memory you'll cherish
+              for generations.
             </p>
 
             <div className="pt-4 animate-fadeInUp animation-delay-600">
               <Link
                 to="/about"
-                className="inline-block px-8 py-3 bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 uppercase tracking-wide text-sm shadow-lg hover:shadow-amber-500/50"
+                className="   inline-block px-8 py-3 bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 uppercase tracking-wide text-sm shadow-lg hover:shadow-amber-500/50"
               >
                 Know More
               </Link>

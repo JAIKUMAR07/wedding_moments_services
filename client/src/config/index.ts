@@ -3,16 +3,17 @@
 
 export const config = {
   // Studio Information
-  studioName: "Wedding Moments Studio",
+  studioName: "Studio Wedding Moments",
   studioDescription:
     "Capturing life's most precious moments with professional photography services.",
-  studioAddress: "Your Studio Address, City, State",
+  studioAddress:
+    "G-16/170-171,GF, near Rajah Mandapam, RCD Road, Visakhapatnam, Andhra Pradesh 530007",
 
   // Contact Information - Defaults until loaded from DB
   contact: {
-    email: "info@weddingmoments.com",
-    phone: "+91 98765 43210",
-    whatsapp: "919876543210",
+    email: "[EMAIL_ADDRESS]",
+    phone: "+91 99895 16846",
+    whatsapp: "919989516846",
   },
 
   // Social Media - Defaults until loaded from DB

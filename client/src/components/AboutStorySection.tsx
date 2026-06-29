@@ -4,6 +4,8 @@ import { useConfig } from "../context/ConfigContext";
 
 const AboutStorySection = () => {
   const { social } = useConfig();
+  const startYear = 2018;
+  const yearsOfExperience = new Date().getFullYear() - startYear;
 
   return (
     <section className="py-16 md:py-24 mx-4 my-12 md:mx-0">
@@ -28,57 +30,51 @@ const AboutStorySection = () => {
           {/* Right Side: Content */}
           <div className="w-full lg:w-3/5 space-y-8">
             <h2 className="text-3xl md:text-5xl font-serif text-amber-500 font-medium tracking-wide">
-              It's All About My Story
+              All About My Story
             </h2>
 
             <div className="space-y-6 text-gray-300 leading-relaxed text-lg">
               <p>
-                Wedding Moments Studio is the creative vision of a passionate
-                team led by an accomplished photographer with a zeal for
-                capturing life's most memorable moments through the lens. With
-                years of experience and a keen eye for detail, We specialize in
-                various genres of photography, including weddings, portraits,
-                events, and landscapes.
+                Hi, I'm <span className="text-white  ">Fitesh Dewangan</span>,
+                the photographer behind Wedding Moments Studio.
               </p>
 
               <p>
-                Driven by a relentless pursuit of excellence, we combine
-                technical expertise with artistic flair to deliver stunning
-                images that evoke emotion and tell captivating stories. Whether
-                it's freezing a fleeting expression, immortalizing a
-                breathtaking landscape, or documenting the intimacy of a special
-                occasion, we excel in creating timeless visual masterpieces.
+                Photography has always been more than a profession for me it's a
+                way to capture genuine emotions and create memories that last a
+                lifetime. I started my journey by working with different
+                photography studios and as a freelance photographer, where I
+                learned through hands-on experience and developed my own style
+                behind the camera.
               </p>
 
               <p>
-                Dedicated to exceeding client expectations, we prioritize
-                communication and collaboration, ensuring that each photo
-                session is tailored to reflect the unique personalities and
-                preferences of the individuals involved. From the initial
-                consultation to the final delivery of images, we strive to
-                provide a seamless and enjoyable experience, characterized by
-                professionalism, reliability, and creativity.
+                I enjoy capturing weddings, candid moments, bride and couple
+                portraits, family celebrations, baby shoots, and every special
+                occasion that tells a unique story. My photography style is a
+                blend of candid, traditional, cinematic, and modern photography,
+                allowing me to capture every moment naturally and beautifully.
               </p>
 
-              <p className="hidden md:block">
-                With a commitment to continuous growth and innovation, we stay
-                abreast of the latest trends and techniques in photography,
-                constantly refining skills and experimenting with new ideas to
-                push the boundaries of creativity. Whether it's a traditional
-                wedding ceremony, a candid family portrait, or a corporate
-                event, Wedding Moments Studio promises to capture moments that
-                will be cherished for a lifetime.
+              <p>
+                My goal is simple to make every client feel comfortable in front
+                of the camera and deliver photographs they'll love for years to
+                come. I believe every smile deserves to be remembered, and I'm
+                grateful to be a part of life's most meaningful moments.
               </p>
             </div>
-
+            <div className="grid grid-cols-2 gap-6">
+              <div className="p-4 rounded-xl bg-zinc-900 border border-white/10 hover:border-amber-500/50 transition-colors duration-300">
+                <h4 className="text-3xl font-serif text-amber-500 font-bold mb-1">
+                  {yearsOfExperience}+
+                </h4>
+                <p className="text-gray-400 text-sm uppercase tracking-wide">
+                  Years of Experience
+                </p>
+              </div>
+            </div>
             {/* Footer / Contact Info */}
             <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div>
-                <h3 className="text-2xl font-serif text-amber-400 capitalize">
-                  {config.studioName}
-                </h3>
-              </div>
-
               <div className="flex flex-col sm:flex-row gap-6 text-gray-400">
                 <div className="flex items-center gap-2 group cursor-pointer">
                   <span className="p-2 bg-amber-500/10 rounded-full text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-colors duration-300 border border-amber-500/20">

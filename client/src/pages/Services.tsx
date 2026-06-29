@@ -220,8 +220,9 @@ const Services = () => {
             </div>
           </div>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
-            Professional photography services tailored to capture your special
-            moments
+            Professional photography services
+            <br />
+            to capture your special moments
           </p>
 
           {/* Search Bar */}

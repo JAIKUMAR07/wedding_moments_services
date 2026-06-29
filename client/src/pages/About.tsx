@@ -115,10 +115,11 @@ const About = () => {
         {/* Contact CTA */}
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-12 text-center">
           <h2 className="text-4xl font-serif font-bold text-white mb-4">
-            Ready to Create Magic Together?
+            Ready to Capture Your Special Moments?
           </h2>
           <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            Let's discuss your photography needs and create something beautiful
+            Let's discuss your photography needs and create memories you'll
+            cherish for a lifetime
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

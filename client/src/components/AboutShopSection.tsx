@@ -1,6 +1,11 @@
 import { config } from "../config";
 
 const AboutShopSection = () => {
+  const currentYear = new Date().getFullYear();
+  const shopStartYear = 2025;
+  const yearsOfExperience = Math.max(1, currentYear - shopStartYear);
+  const happyClients = yearsOfExperience * 48;
+
   return (
     <section className="bg-black py-20 relative overflow-hidden">
       {/* Background Glow */}
@@ -20,34 +25,32 @@ const AboutShopSection = () => {
           <div className="space-y-8">
             <div className="prose prose-lg prose-invert text-gray-400">
               <p className="text-xl text-gray-300 font-light leading-relaxed">
-                Located in the heart of the city,{" "}
+                Located in Raipur,{" "}
                 <span className="text-amber-400 font-serif">
                   {config.studioName}
                 </span>{" "}
-                is not just a photography studio; it's a creative sanctuary
-                designed to turn fleeting moments into eternal memories.
+                is a creative space where beautiful moments are captured and
+                turned into lasting memories.
               </p>
-              <p>
-                Our state-of-the-art facility is equipped with industry-leading
-                lighting systems, high-resolution cameras, and a variety of
-                curated backdrops that cater to every mood—from rustic vintage
-                to ultra-modern chic. We believe that the environment plays a
-                crucial role in the artistic process, which is why our studio is
-                designed to be comfortable, inspiring, and professional.
-              </p>
-              <p>
-                Whether you are visiting for a bridal consultation, a baby
-                portfolio shoot, or a commercial project, our studio offers a
-                welcoming ambiance where ideas flourish. We invite you to step
-                in, explore our gallery walls showcasing our finest work, and
-                discuss how we can bring your vision to life.
+              <p className="text-xl text-gray-300 font-light leading-relaxed">
+                {" "}
+                Founded in 2025,{" "}
+                <span className="text-amber-400 font-serif">
+                  {config.studioName}
+                </span>{" "}
+                is built on professional photography experience dating back to
+                2018. We offer photography services for weddings, pre-weddings,
+                baby shoots, birthdays, and commercial projects. Every session
+                is handled with creativity, attention to detail, and a passion
+                for capturing genuine moments that you'll cherish for years to
+                come.
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="p-4 rounded-xl bg-zinc-900 border border-white/10 hover:border-amber-500/50 transition-colors duration-300">
                 <h4 className="text-3xl font-serif text-amber-500 font-bold mb-1">
-                  5+
+                  {yearsOfExperience}+
                 </h4>
                 <p className="text-gray-400 text-sm uppercase tracking-wide">
                   Years of Excellence
@@ -55,7 +58,7 @@ const AboutShopSection = () => {
               </div>
               <div className="p-4 rounded-xl bg-zinc-900 border border-white/10 hover:border-amber-500/50 transition-colors duration-300">
                 <h4 className="text-3xl font-serif text-amber-500 font-bold mb-1">
-                  1000+
+                  {happyClients}+
                 </h4>
                 <p className="text-gray-400 text-sm uppercase tracking-wide">
                   Happy Clients
@@ -69,14 +72,14 @@ const AboutShopSection = () => {
             <div className="space-y-4 translate-y-8">
               <div className="aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50 group">
                 <img
-                  src="https://images.unsplash.com/photo-1590635292440-ae64501438fa?q=80&w=1000"
+                  src="shop/1.webp  "
                   alt="Studio Interior"
                   className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
               <div className="aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50 group">
                 <img
-                  src="https://images.unsplash.com/photo-1595514682025-a1c6a2133fcc?q=80&w=1000"
+                  src="shop/3.webp  "
                   alt="Camera Gear"
                   className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                 />
@@ -85,14 +88,14 @@ const AboutShopSection = () => {
             <div className="space-y-4">
               <div className="aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50 group">
                 <img
-                  src="https://images.unsplash.com/photo-1588531773099-245873752db2?q=80&w=1000"
+                  src="shop/2.webp  "
                   alt="Lighting Setup"
                   className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
               <div className="aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50 group">
                 <img
-                  src="https://images.unsplash.com/photo-1520696937669-e054457e51ca?q=80&w=1000"
+                  src="shop/5.webp  "
                   alt="Client Lounge"
                   className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                 />
