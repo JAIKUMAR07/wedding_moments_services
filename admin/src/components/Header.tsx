@@ -1,4 +1,4 @@
-import { Search, Bell, User, LogOut, Menu } from "lucide-react";
+import { Bell, User, LogOut, Menu } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
