@@ -44,7 +44,7 @@ const Header = () => {
             />
             <span className="text-lg md:text-xl font-serif font-semibold text-white group-hover:text-amber-400 transition-colors">
               <span className="hidden sm:inline">{config.studioName}</span>
-              <span className="sm:hidden">WM Studio</span>
+              <span className="sm:hidden">Studio WM</span>
             </span>
           </Link>
 

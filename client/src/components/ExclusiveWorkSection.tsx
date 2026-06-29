@@ -72,10 +72,10 @@ const ExclusiveWorkSection = () => {
           {/* Left Arrow */}
           <button
             onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 p-3 rounded-full text-white hover:bg-amber-600 hover:text-white transition-all duration-300 backdrop-blur-sm -ml-2 lg:-ml-6 hidden md:block"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 p-2 md:p-3 rounded-full text-white hover:bg-amber-600 hover:text-white transition-all duration-300 backdrop-blur-sm md:-ml-2 lg:-ml-6 flex items-center justify-center"
             aria-label="Scroll left"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
           {/* Carousel Container */}
@@ -108,10 +108,10 @@ const ExclusiveWorkSection = () => {
           {/* Right Arrow */}
           <button
             onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 p-3 rounded-full text-white hover:bg-amber-600 hover:text-white transition-all duration-300 backdrop-blur-sm -mr-2 lg:-mr-6 hidden md:block"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/50 p-2 md:p-3 rounded-full text-white hover:bg-amber-600 hover:text-white transition-all duration-300 backdrop-blur-sm md:-mr-2 lg:-mr-6 flex items-center justify-center"
             aria-label="Scroll right"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
           </button>
         </div>
       </div>

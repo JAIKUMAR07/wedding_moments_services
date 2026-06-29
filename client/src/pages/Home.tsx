@@ -15,7 +15,7 @@ const Home = () => {
         </title>
         <meta
           name="description"
-          content={`Welcome to ${staticConfig.studioName}. We specialize in capturing your most precious wedding moments with elegance and style. Professional photography services for weddings, pre-wedding shoots, birthdays, and special events.`}
+          content={`${staticConfig.studioName} offers wedding, pre-wedding, baby shoot, birthday, and commercial photography services in Raipur. Capture your special moments with professional photography and cinematic storytelling.`}
         />
         <meta
           name="keywords"
@@ -29,7 +29,7 @@ const Home = () => {
         />
         <meta
           property="og:description"
-          content={`Welcome to ${staticConfig.studioName}. We specialize in capturing your most precious wedding moments with elegance and style.`}
+          content={`${staticConfig.studioName} offers wedding, pre-wedding, baby shoot, birthday, and commercial photography services in Raipur. Capture your special moments with professional photography and cinematic storytelling.`}
         />
         <meta property="og:type" content="website" />
 
@@ -40,7 +40,7 @@ const Home = () => {
         />
         <meta
           name="twitter:description"
-          content={`Welcome to ${staticConfig.studioName}. We specialize in capturing your most precious wedding moments with elegance and style.`}
+          content={`${staticConfig.studioName} offers wedding, pre-wedding, baby shoot, birthday, and commercial photography services in Raipur. Capture your special moments with professional photography and cinematic storytelling.`}
         />
       </Helmet>
       {/* Hero Section */}

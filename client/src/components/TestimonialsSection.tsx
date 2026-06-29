@@ -37,10 +37,66 @@ const testimonials = [
 ];
 
 import { Star } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const TestimonialsSection = () => {
-  // Duplicate the array to ensure seamless infinite scroll
-  const scrollingTestimonials = [...testimonials, ...testimonials];
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [startScrollLeft, setStartScrollLeft] = useState(0);
+
+  // Quadruple the array to ensure seamless infinite scroll even on ultra-wide screens
+  const scrollingTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials];
+
+  useEffect(() => {
+    let animationId: number;
+
+    const scroll = () => {
+      if (scrollRef.current && (!isPaused && !isDragging)) {
+        scrollRef.current.scrollLeft += 1;
+      }
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    animationId = requestAnimationFrame(scroll);
+
+    return () => cancelAnimationFrame(animationId);
+  }, [isPaused, isDragging]);
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const maxScroll = scrollRef.current.scrollWidth / 2;
+      if (scrollRef.current.scrollLeft >= maxScroll) {
+        scrollRef.current.scrollLeft -= maxScroll;
+      } else if (scrollRef.current.scrollLeft <= 0) {
+        scrollRef.current.scrollLeft += maxScroll;
+      }
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setStartScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    scrollRef.current.scrollLeft = startScrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
 
   return (
     <section className="bg-zinc-900 py-24 overflow-hidden border-t border-white/5">
@@ -53,10 +109,21 @@ const TestimonialsSection = () => {
       {/* Marquee Container */}
       <div className="relative w-full">
         {/* Gradient Masks for smooth fade out */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-black to-transparent z-10"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-black to-transparent z-10"></div>
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-black to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-black to-transparent z-10 pointer-events-none"></div>
 
-        <div className="flex animate-scroll gap-8 w-max px-8">
+        <div 
+          ref={scrollRef}
+          onScroll={handleScroll}
+          onMouseLeave={handleMouseLeave}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+          className={`flex gap-8 overflow-x-auto scrollbar-hide py-4 select-none ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
           {scrollingTestimonials.map((item, index) => (
             <div
               key={`${item.id}-${index}`}

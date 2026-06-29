@@ -33,7 +33,7 @@ const AboutStorySection = () => {
               All About My Story
             </h2>
 
-            <div className="space-y-6 text-gray-300 leading-relaxed text-lg">
+            <div className="space-y-6 text-gray-300 leading-relaxed text-lg text-justify">
               <p>
                 Hi, I'm <span className="text-white  ">Fitesh Dewangan</span>,
                 the photographer behind Wedding Moments Studio.
@@ -63,7 +63,7 @@ const AboutStorySection = () => {
                 grateful to be a part of life's most meaningful moments.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2  gap-6">
               <div className="p-4 rounded-xl bg-zinc-900 border border-white/10 hover:border-amber-500/50 transition-colors duration-300">
                 <h4 className="text-3xl font-serif text-amber-500 font-bold mb-1">
                   {yearsOfExperience}+

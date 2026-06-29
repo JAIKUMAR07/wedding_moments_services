@@ -5,9 +5,7 @@ export const config = {
   // Studio Information
   studioName: "Studio Wedding Moments",
   studioDescription:
-    "Capturing life's most precious moments with professional photography services.",
-  studioAddress:
-    "G-16/170-171,GF, near Rajah Mandapam, RCD Road, Visakhapatnam, Andhra Pradesh 530007",
+    "Capture your special moments with professional photography and cinematic storytelling",
 
   // Contact Information - Defaults until loaded from DB
   contact: {

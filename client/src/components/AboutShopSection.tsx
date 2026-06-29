@@ -22,9 +22,9 @@ const AboutShopSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
-          <div className="space-y-8">
+          <div className="space-y-8 order-2 lg:order-1">
             <div className="prose prose-lg prose-invert text-gray-400">
-              <p className="text-xl text-gray-300 font-light leading-relaxed">
+              <p className="text-xl text-gray-300 font-light leading-relaxed text-justify">
                 Located in Raipur,{" "}
                 <span className="text-amber-400 font-serif">
                   {config.studioName}
@@ -32,7 +32,7 @@ const AboutShopSection = () => {
                 is a creative space where beautiful moments are captured and
                 turned into lasting memories.
               </p>
-              <p className="text-xl text-gray-300 font-light leading-relaxed">
+              <p className="text-xl text-gray-300 font-light leading-relaxed text-justify">
                 {" "}
                 Founded in 2025,{" "}
                 <span className="text-amber-400 font-serif">
@@ -68,7 +68,7 @@ const AboutShopSection = () => {
           </div>
 
           {/* Image Grid */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 order-1 lg:order-2">
             <div className="space-y-4 translate-y-8">
               <div className="aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50 group">
                 <img

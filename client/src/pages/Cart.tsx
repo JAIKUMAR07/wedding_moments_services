@@ -3,11 +3,22 @@ import { Helmet } from "react-helmet-async";
 import { useCart } from "../context/CartContext";
 import { config as staticConfig } from "../config";
 import { useConfig } from "../context/ConfigContext";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const navigate = useNavigate();
   const { cart, removeFromCart, clearCart, getCartTotal } = useCart();
   const { getWhatsAppLink, getMailtoLink } = useConfig();
+
+  const handleRemoveFromCart = (serviceId: string, serviceName: string) => {
+    removeFromCart(serviceId);
+    toast.error(`"${serviceName}" removed from cart.`, { icon: "🗑️" });
+  };
+
+  const handleClearCart = () => {
+    clearCart();
+    toast.error("Cart cleared successfully!", { icon: "🗑️" });
+  };
 
   const generateBookingMessage = (): string => {
     let message = `🎉 *Booking Request - ${staticConfig.studioName}*\n\n`;
@@ -117,7 +128,7 @@ const Cart = () => {
             </span>
           </h1>
           <button
-            onClick={clearCart}
+            onClick={handleClearCart}
             className="text-red-400 hover:text-red-300 transition-colors flex items-center gap-2"
           >
             <svg
@@ -177,7 +188,7 @@ const Cart = () => {
                       </svg>
                     </button>
                     <button
-                      onClick={() => removeFromCart(item.serviceId)}
+                      onClick={() => handleRemoveFromCart(item.serviceId, item.serviceName)}
                       className="text-red-400 hover:text-red-300 transition-colors"
                       aria-label="Remove service"
                     >

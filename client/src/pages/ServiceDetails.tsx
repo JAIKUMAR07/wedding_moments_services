@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useServices } from "../context/ServicesContext";
 import { useCart } from "../context/CartContext";
 import type { SubService } from "../types";
@@ -106,11 +107,17 @@ const ServiceDetails = () => {
       totalPrice: getTotalPrice(),
     });
 
-    navigate("/cart");
+    toast.success("Services added to cart successfully!", {
+      icon: "🛒",
+    });
+    setTimeout(() => {
+      navigate("/services");
+    }, 1500);
   };
 
   return (
     <div className="min-h-screen bg-linear-to-b from-black via-gray-900 to-black py-20">
+      {/* Toast Notification replaced with react-hot-toast */}
       <Helmet>
         <title>
           {service.name} | {staticConfig.studioName}
@@ -270,29 +277,29 @@ const ServiceDetails = () => {
         </div>
 
         {/* Total and Add to Cart */}
-        <div className="backdrop-blur-sm border border-white/10 rounded-2xl p-8 sticky bottom-6 z-20 shadow-2xl bg-black/80 backdrop-saturate-150">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div className="backdrop-blur-sm border border-white/10 rounded-2xl p-4 sticky bottom-6 z-20 shadow-2xl bg-black/80 backdrop-saturate-150">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
             <div>
-              <h3 className="text-2xl font-serif font-semibold text-white mb-2">
+              <h3 className="text-xl font-serif font-semibold text-white mb-2">
                 Total Price
               </h3>
-              <p className="text-gray-400">
-                {selectedSubServices.length} service(s) selected
+              <p className="text-xs md:text-base text-gray-400 mb-1 md:mb-0">
+                {selectedSubServices.length} service(s)
               </p>
             </div>
 
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
               <div className="text-right">
-                <div className="text-4xl font-bold text-amber-400">
-                  ₹{getTotalPrice()}
+                <div className="text-2xl font-bold text-amber-400">
+                  ₹{getTotalPrice()}{" "}
+                  <span className="text-sm text-gray-400">INR</span>
                 </div>
-                <div className="text-sm text-gray-400">INR</div>
               </div>
 
               <button
                 onClick={handleAddToCart}
                 disabled={selectedSubServices.length === 0}
-                className="px-8 py-4 bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-amber-500 disabled:hover:to-amber-600 w-full md:w-auto text-lg"
+                className="px-4 py-2 bg-linear-to-r  from-amber-500 to-amber-600 text-white font-semibold rounded-full hover:from-amber-600 hover:to-amber-700 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-amber-500 disabled:hover:to-amber-600 w-full md:w-auto text-lg"
               >
                 {location.state?.editMode ? "Update Cart" : "Add to Cart"}
               </button>
